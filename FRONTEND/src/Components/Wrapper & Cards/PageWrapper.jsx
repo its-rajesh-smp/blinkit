@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
 
 function PageWrapper({ className, children }) {
-    return (
-        <div className={`${className && className} p-2`} >{children}</div>
-    )
+  return (
+    <div
+      className={`${
+        className && className
+      } p-2 w-full  lg:w-[80%] mx-auto flex flex-col justify-center`}
+    >
+      {children}
+    </div>
+  );
 }
 
-export default PageWrapper
+export default PageWrapper;
