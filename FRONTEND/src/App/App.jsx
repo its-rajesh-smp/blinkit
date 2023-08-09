@@ -4,7 +4,7 @@ import "./App.css";
 
 function App() {
   return (
-    <div>
+    <div className=" pb-40 md:pb-0">
       <Header />
       <MyRoutes />
     </div>
