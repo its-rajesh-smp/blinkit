@@ -7,7 +7,7 @@ import ProductCarousel from "../Components/HomePage/ProductCarousel";
 
 function Homepage() {
   return (
-    <PageWrapper>
+    <PageWrapper className="p-2">
       <TopBanner />
       <AdCarousel />
       <MainCategoryContainer />

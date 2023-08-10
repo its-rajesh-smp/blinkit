@@ -1,8 +1,12 @@
 import React from "react";
 
-function Product() {
+function Product({ className }) {
   return (
-    <div className=" shrink-0 relative w-48  shadow  h-72 flex p-2 rounded-md  flex-col justify-between border">
+    <div
+      className={`${
+        className && className
+      } shrink-0 relative bg-white  shadow  h-72 flex p-2 rounded-md  flex-col justify-between border`}
+    >
       {/* OUT OF STOCK */}
       {/* <div className=" flex z-10 justify-center items-center opacity-80 absolute top-0 left-0 bg-gray-100 w-full h-full rounded-md">
         <p className=" relative bottom-10 text-xs font-bold text-white bg-slate-700 px-2 py-1  rounded-md">

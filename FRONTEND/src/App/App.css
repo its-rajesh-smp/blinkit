@@ -1,3 +1,9 @@
 .hideScrollbar::-webkit-scrollbar{
     display: none;
 }
+.blurWrapper{
+    background-color: rgba(0, 0, 0, 0.507);
+}
+.useStopScroll{
+    overflow: hidden;
+}

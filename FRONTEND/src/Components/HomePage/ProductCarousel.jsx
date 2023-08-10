@@ -23,34 +23,25 @@ function ProductCarousel() {
           ref={containerRef}
           className="hideScrollbar  overflow-scroll flex gap-4"
         >
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
+          <Product className="w-48" />
         </div>
         <ScrollArrow
           containerRef={containerRef}
