@@ -19,7 +19,7 @@ app.use(user);
 
 // App Start
 sequelize
-  .sync()
+  .sync({ force: true })
   .then(() => {
     app.listen(process.env.PORT || 5000, () => {
       console.log("APP IS LISTENING");

@@ -4,6 +4,11 @@ import InputButton from "../../Input/InputButton";
 import Loader from "../../UI/Loader";
 import { MdClose } from "react-icons/md";
 import HeaderContext from "../../../Context/HeaderContext";
+import { useDispatch } from "react-redux";
+import {
+  createUserAct,
+  loginUserAct,
+} from "../../../Store/Actions/authActions";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -11,13 +16,22 @@ function LoginForm() {
   const [loginForm, switchLoginForm] = useState(true);
   const [loader, setLoader] = useState(false);
   const { setLoginComponentHandeler } = useContext(HeaderContext);
+  const dispatch = useDispatch();
 
   /* -------------------------------------------------------------------------- */
   /*                              ON CLICK HANDELER                             */
   /* -------------------------------------------------------------------------- */
   const onClickHandeler = (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      return;
+    }
+
     setLoader(true);
+    loginForm
+      ? dispatch(loginUserAct(email, password, setLoader, closeBtnHandeler))
+      : dispatch(createUserAct(email, password, setLoader, closeBtnHandeler));
   };
 
   /* -------------------------------------------------------------------------- */

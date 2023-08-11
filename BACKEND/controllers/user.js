@@ -7,7 +7,7 @@ exports.signUp = async (req, res) => {
     const { email, password } = req.body;
 
     // Generating Hash
-    const hash = bcrypt.hash(password, process.env.SALT);
+    const hash = bcrypt.hashSync(password, +process.env.SALT);
 
     // Storing The User
     await User.create({ email, password: hash });
@@ -16,11 +16,11 @@ exports.signUp = async (req, res) => {
     const idToken = createJwt({ email, password });
 
     // Froming Payload
-    const payload = { email, password, idToken };
+    const payload = { email, idToken };
 
     res.status(201).send(payload);
   } catch (error) {
-    res.status(403).send(false);
+    res.status(403).send(error.message);
   }
 };
 exports.logIn = async (req, res) => {
@@ -28,11 +28,12 @@ exports.logIn = async (req, res) => {
     const { email, password } = req.body;
 
     // Geting The User
-    const dbRes = await User.findByPk({ where: { email: email } });
+    const dbRes = await User.findOne({ where: { email: email } });
 
     // If User Not Found
     if (dbRes === null) {
       res.status(404).send("User Not Found");
+      return;
     }
 
     // Check Hash
@@ -41,17 +42,18 @@ exports.logIn = async (req, res) => {
     // If Hash not matched
     if (!hash) {
       res.status(401).send("Password Not Matched");
+      return;
     }
 
     // Generating idToken
     const idToken = createJwt({ email, password });
 
     // Froming Payload
-    const payload = { email, password, idToken };
+    const payload = { email, idToken };
 
     res.status(201).send(payload);
   } catch (error) {
-    res.status(404).send(false);
+    res.status(404).send(error.message);
   }
 };
 exports.get = async (req, res) => {
@@ -61,11 +63,12 @@ exports.get = async (req, res) => {
     const { email, password } = verifyJwt(idToken);
 
     // Geting The User
-    const dbRes = await User.findByPk({ where: { email: email } });
+    const dbRes = await User.findOne({ where: { email: email } });
 
     // If User Not Found
     if (dbRes === null) {
       res.status(404).send("User Not Found");
+      return;
     }
 
     // Check Hash
@@ -74,6 +77,7 @@ exports.get = async (req, res) => {
     // If Hash not matched
     if (!hash) {
       res.status(401).send("Password Not Matched");
+      return;
     }
 
     // Froming Payload
@@ -81,7 +85,8 @@ exports.get = async (req, res) => {
 
     res.status(201).send(payload);
   } catch (error) {
-    res.status(404).send(false);
+    console.log(error);
+    res.status(404).send(error.message);
   }
 };
 exports.update = async (req, res) => {};
