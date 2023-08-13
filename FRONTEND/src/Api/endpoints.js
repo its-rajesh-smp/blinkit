@@ -4,3 +4,5 @@ export const USER_LOGIN = `${host}/user/logIn`;
 export const USER_GET = `${host}/user`;
 
 export const CAOUSEL_AD_GET = `${host}/carousel-ad`;
+
+export const MAIN_CATEGORY_GET = `${host}/mainCategory`;

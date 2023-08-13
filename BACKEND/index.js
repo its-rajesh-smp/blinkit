@@ -12,16 +12,18 @@ app.use(express.json());
 // Routes
 const user = require("./routes/user");
 const carousel_ad = require("./routes/carousel-ad");
+const mainCategory = require("./routes/mainCategory");
 
 // Middlewares
 app.use(user);
 app.use(carousel_ad);
+app.use(mainCategory);
 
 // Relations
 
 // App Start
 sequelize
-  .sync({ force: true })
+  .sync()
   .then(() => {
     app.listen(process.env.PORT || 5000, () => {
       console.log("APP IS LISTENING");
