@@ -11,9 +11,11 @@ app.use(express.json());
 
 // Routes
 const user = require("./routes/user");
+const carousel_ad = require("./routes/carousel-ad");
 
 // Middlewares
 app.use(user);
+app.use(carousel_ad);
 
 // Relations
 
