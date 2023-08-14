@@ -6,3 +6,4 @@ export const USER_GET = `${host}/user`;
 export const CAOUSEL_AD_GET = `${host}/carousel-ad`;
 
 export const MAIN_CATEGORY_GET = `${host}/mainCategory`;
+export const SUB_CATEGORY_GET = `${host}/subCategory`;

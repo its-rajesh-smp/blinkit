@@ -13,13 +13,20 @@ app.use(express.json());
 const user = require("./routes/user");
 const carousel_ad = require("./routes/carousel-ad");
 const mainCategory = require("./routes/mainCategory");
+const subCategory = require("./routes/subCategory");
+const product = require("./routes/product");
+const productType = require("./routes/productType");
+
+// Relations
+require("./relations/relations")();
 
 // Middlewares
 app.use(user);
 app.use(carousel_ad);
 app.use(mainCategory);
-
-// Relations
+app.use(subCategory);
+app.use(product);
+app.use(productType);
 
 // App Start
 sequelize
