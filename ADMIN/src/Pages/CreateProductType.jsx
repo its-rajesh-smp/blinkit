@@ -2,25 +2,40 @@ import React, { useState } from "react";
 import Form from "../Components/UI/Form";
 import Container from "../Components/UI/Container";
 import Select from "../Components/UI/Select";
+import {
+  MAIN_CATEGORY,
+  PRODUCT,
+  PRODUCT_TYPE,
+  PRODUCT_TYPE_CREATE,
+  SUB_CATEGORY,
+} from "../Api/endpoints";
+import useFetch from "../Hooks/useFetch";
 
 function CreateProductType() {
-  const [state, setState] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [discount, setDiscount] = useState("");
-  const [category, setCategory] = useState("");
-  const [subCategory, setSubCategory] = useState("");
-  const [productId, setProductId] = useState(0);
+  const [category, setCategory] = useState(1);
+  const [subCategory, setSubCategory] = useState(1);
+  const [productId, setProductId] = useState(1);
 
-  const onClickAddHandeler = (e) => {
+  const [state, setState] = useFetch(`${PRODUCT_TYPE}/${productId}`);
+
+  const onClickAddHandeler = async (e) => {
     e.preventDefault();
-    const payload = {
-      name,
-      price: +price,
-      discount: +discount,
-      productId: +productId,
-    };
-    setState((p) => [payload, ...p]);
+    try {
+      const payload = {
+        name,
+        price: +price,
+        discount: +discount,
+        productId: +productId,
+      };
+      const { data } = await axios.post(PRODUCT_TYPE_CREATE, payload);
+      setState((p) => [data, ...p]);
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
+    }
   };
 
   return (
@@ -46,9 +61,17 @@ function CreateProductType() {
           placeholder="Discount"
         />
 
-        <Select onChange={setCategory} value={category} />
-        <Select onChange={setSubCategory} value={subCategory} />
-        <Select onChange={setProductId} value={productId} />
+        <Select path={MAIN_CATEGORY} onChange={setCategory} value={category} />
+        <Select
+          path={`${SUB_CATEGORY}/${category}`}
+          onChange={setSubCategory}
+          value={subCategory}
+        />
+        <Select
+          path={`${PRODUCT}/${subCategory}`}
+          onChange={setProductId}
+          value={productId}
+        />
 
         <button onClick={onClickAddHandeler} className=" bg-blue-400">
           Add Product Type

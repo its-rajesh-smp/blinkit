@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import useFetch from "../../Hooks/useFetch";
 
 function Select({ path, onChange, value }) {
+  const [options] = useFetch(path);
+
   return (
     <div className=" w-full">
       <select
@@ -8,8 +11,11 @@ function Select({ path, onChange, value }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >
-        <option value="">Cloathing</option>
-        <option value="">Electronics</option>
+        {options.map((option) => (
+          <option key={Math.random()} value={option.id}>
+            {option.name}
+          </option>
+        ))}
       </select>
     </div>
   );

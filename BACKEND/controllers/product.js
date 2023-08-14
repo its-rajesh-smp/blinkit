@@ -21,14 +21,15 @@ exports.get = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const { name, description, images, category, subCategory } = req.body;
+    const { name, description, images, category, subcategory } = req.body;
     const dbRes = await Product.create({
       name,
       description,
       images,
       category,
-      subCategory,
+      subcategory,
     });
+
     res.send(dbRes);
   } catch (error) {
     res.status(404).send(error.message);

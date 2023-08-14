@@ -1,17 +1,33 @@
 import React, { useState } from "react";
 import Form from "../Components/UI/Form";
 import Container from "../Components/UI/Container";
+import {
+  MAIN_CATEGORY,
+  SUB_CATEGORY,
+  SUB_CATEGORY_CREATE,
+} from "../Api/endpoints";
+import axios from "axios";
+import Select from "../Components/UI/Select";
+import useFetch from "../Hooks/useFetch";
 
 function CreateSubCategory() {
-  const [state, setState] = useState([]);
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(1);
 
-  const onClickAddHandeler = (e) => {
+  const [state, setState] = useFetch(`${SUB_CATEGORY}/${category}`);
+
+  const onClickAddHandeler = async (e) => {
     e.preventDefault();
-    const payload = { name, url, category };
-    setState((p) => [payload, ...p]);
+    try {
+      const payload = { name, image: url, category };
+      console.log(payload);
+      const { data } = await axios.post(SUB_CATEGORY_CREATE, payload);
+      setState((p) => [data, ...p]);
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
+    }
   };
 
   return (
@@ -30,10 +46,9 @@ function CreateSubCategory() {
           type="text"
           placeholder=" Image URL"
         />
-        <select onChange={(e) => setCategory(e.target.value)} value={category}>
-          <option value="">Cloathing</option>
-          <option value="">Electronics</option>
-        </select>
+
+        <Select path={MAIN_CATEGORY} onChange={setCategory} value={category} />
+
         <button onClick={onClickAddHandeler} className=" bg-blue-400">
           Add Sub Category
         </button>

@@ -2,19 +2,40 @@ import React, { useState } from "react";
 import Form from "../Components/UI/Form";
 import Container from "../Components/UI/Container";
 import Select from "../Components/UI/Select";
+import {
+  MAIN_CATEGORY,
+  PRODUCT,
+  PRODUCT_CREATE,
+  SUB_CATEGORY,
+} from "../Api/endpoints";
+import useFetch from "../Hooks/useFetch";
+import axios from "axios";
 
 function CreateProduct() {
-  const [state, setState] = useState([]);
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [subCategory, setSubCategory] = useState("");
+  const [category, setCategory] = useState(1);
+  const [subCategory, setSubCategory] = useState(1);
 
-  const onClickAddHandeler = (e) => {
+  const [state, setState] = useFetch(`${PRODUCT}/${subCategory}`);
+
+  const onClickAddHandeler = async (e) => {
     e.preventDefault();
-    const payload = { name, url, description, category, subCategory };
-    setState((p) => [payload, ...p]);
+    try {
+      const payload = {
+        name,
+        images: url,
+        description,
+        category,
+        subcategory: subCategory,
+      };
+      const { data } = await axios.post(PRODUCT_CREATE, payload);
+      setState((p) => [data, ...p]);
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
+    }
   };
 
   return (
@@ -40,8 +61,12 @@ function CreateProduct() {
           placeholder="Description"
         />
 
-        <Select onChange={setCategory} value={category} />
-        <Select onChange={setSubCategory} value={subCategory} />
+        <Select path={MAIN_CATEGORY} onChange={setCategory} value={category} />
+        <Select
+          path={`${SUB_CATEGORY}/${category}`}
+          onChange={setSubCategory}
+          value={subCategory}
+        />
 
         <button onClick={onClickAddHandeler} className=" bg-blue-400">
           Add Category
