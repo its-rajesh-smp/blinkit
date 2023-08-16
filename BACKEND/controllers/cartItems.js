@@ -50,7 +50,8 @@ exports.update = async (req, res) => {
       { quantity },
       { where: { userEmail: email, producttypeId } }
     );
-    res.send(true);
+
+    res.send({ producttypeId, price: productRes.price, quantity });
   } catch (error) {
     res.status(404).send(error.message);
   }
@@ -60,6 +61,17 @@ exports.delete = async (req, res) => {
   try {
     const { email } = req.user;
     const { producttypeId } = req.params;
+
+    // Finding Product Type
+    const productRes = await ProductType.findOne({
+      where: { id: producttypeId },
+    });
+
+    // If Product Not found
+    if (!productRes) {
+      res.status(404).send("Product Not Found");
+      return;
+    }
 
     // Delete From Cart
     const dbRes = await CartItem.destroy({
@@ -72,7 +84,7 @@ exports.delete = async (req, res) => {
       return;
     }
 
-    res.send(true);
+    res.send({ producttypeId, price: productRes.price });
   } catch (error) {
     res.status(404).send(error.message);
   }

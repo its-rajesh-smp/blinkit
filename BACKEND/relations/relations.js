@@ -21,5 +21,6 @@ module.exports = () => {
   User.hasMany(CartItem);
   CartItem.belongsTo(User);
 
+  ProductType.hasMany(CartItem);
   CartItem.belongsTo(ProductType);
 };

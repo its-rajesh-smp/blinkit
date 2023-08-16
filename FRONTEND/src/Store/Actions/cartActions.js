@@ -47,11 +47,24 @@ export const updateCartQuantityAct = (id, quantity, setQuantity) => {
           },
         });
 
-        const newUpdatedCart = getState().cartSlice.filter(
-          (item) => item.id !== id
-        );
+        const newTotal = { quantity: 0, price: 0 };
+        const newCartObj = delete { ...getState().cartSlice.cartObj }[data.id];
+        const newUpdatedCart = getState().cartSlice.cart.filter((item) => {
+          if (item.producttypeId !== data.producttypeId) {
+            newTotal.price = newTotal.price + item.price;
+            newTotal.quantity = newTotal.quantity + item.quantity;
+            return true;
+          }
+        });
 
-        dispatch(setCart(newUpdatedCart));
+        // DISPATCHING NEW UPDATED CART
+        dispatch(
+          setCart({
+            cart: newUpdatedCart,
+            cartObj: newCartObj,
+            total: newTotal,
+          })
+        );
       }
       // Else Update The Cart
       else {
@@ -68,14 +81,32 @@ export const updateCartQuantityAct = (id, quantity, setQuantity) => {
           }
         );
 
-        const newUpdatedCart = getState().cartSlice.map((item) => {
-          if (item.id === id) {
+        console.log(data);
+
+        // FORMING NEW CARTOBJ CARTARRAY CARTTOTAL
+        const newCartObj = {};
+        const newTotal = { quantity: 0, price: 0 };
+        const newUpdatedCart = getState().cartSlice.cart.map((item) => {
+          if (item.producttypeId === data.producttypeId) {
+            newTotal.price = newTotal.price + data.price;
+            newTotal.quantity = newTotal.quantity + data.quantity;
+            newCartObj[item.producttypeId] = data;
             return data;
           }
+          newTotal.price = newTotal.price + item.price;
+          newTotal.quantity = newTotal.quantity + item.quantity;
+          newCartObj[item.producttypeId] = item;
           return item;
         });
 
-        dispatch(setCart(newUpdatedCart));
+        // DISPATCHING NEW UPDATED CART
+        dispatch(
+          setCart({
+            cart: newUpdatedCart,
+            cartObj: newCartObj,
+            total: newTotal,
+          })
+        );
       }
       setQuantity(quantity);
     } catch (error) {

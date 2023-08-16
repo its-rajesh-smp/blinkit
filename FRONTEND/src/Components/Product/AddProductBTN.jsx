@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addToCartAct,
   updateCartQuantityAct,
@@ -7,7 +7,10 @@ import {
 
 function AddProductBTN({ id }) {
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(0);
+  const { cartObj } = useSelector((state) => state.cartSlice);
+  const [quantity, setQuantity] = useState(
+    cartObj[id] ? cartObj[id].quantity : 0
+  );
 
   const onClickAddHandeler = async (e) => {
     e.stopPropagation();

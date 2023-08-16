@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const { createJwt, verifyJwt } = require("../services/jwt");
+const CartItem = require("../models/cartItems");
+const ProductType = require("../models/productType");
 
 exports.signUp = async (req, res) => {
   try {
@@ -63,7 +65,15 @@ exports.get = async (req, res) => {
     const { email, password } = verifyJwt(idToken);
 
     // Geting The User
-    const dbRes = await User.findOne({ where: { email: email } });
+    const dbRes = await User.findOne({
+      where: { email: email },
+      include: [
+        {
+          model: CartItem,
+          include: [{ model: ProductType, attributes: ["price"] }],
+        },
+      ],
+    });
 
     // If User Not Found
     if (dbRes === null) {
@@ -80,10 +90,9 @@ exports.get = async (req, res) => {
       return;
     }
 
-    // Froming Payload
-    const payload = { email, idToken };
+    delete dbRes.dataValues.password;
 
-    res.status(201).send(payload);
+    res.status(201).send(dbRes);
   } catch (error) {
     console.log(error);
     res.status(404).send(error.message);
