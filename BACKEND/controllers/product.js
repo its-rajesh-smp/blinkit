@@ -49,3 +49,20 @@ exports.getByCategory = async (req, res) => {
     res.status(404).send(error.message);
   }
 };
+
+exports.getById = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const dbRes = await Product.findOne({
+      where: { id: productId },
+      include: [
+        ProductType,
+        { model: MainCategory, attributes: ["id", "name"] },
+        { model: SubCategory, attributes: ["id", "name"] },
+      ],
+    });
+    res.send(dbRes);
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
+};

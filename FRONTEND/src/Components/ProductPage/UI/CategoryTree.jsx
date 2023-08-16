@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import ProductDetailsContext from "../../../Context/ProductDetailsPageContext";
 
 function CategoryTree() {
+  const { mainCategory, subCategory } = useContext(ProductDetailsContext);
   return (
-    <p className="text-xs">
-      <span>Home</span>/ <span>Bread & Pav</span> /{" "}
-      <span>Moreish Classic White Bread</span>
-    </p>
+    mainCategory && (
+      <p className="text-xs">
+        <span>Home</span>/ <span>{mainCategory.name}</span> /{" "}
+        <span>{subCategory.name}</span>
+      </p>
+    )
   );
 }
 

@@ -1,12 +1,13 @@
-import React from "react";
-let BODY =
-  "With smooth, soft and uniform texture, Mother Dairy Paneer is rich in protein and fat contents. An important part of Indian diet, fresh and soft paneer can be grilled, barbequed or cooked with gravies for preparing delectable Indian cuisines.";
+import React, { useContext } from "react";
+import ProductDetailsContext from "../../../Context/ProductDetailsPageContext";
 function ProductDetails() {
+  const { description } = useContext(ProductDetailsContext);
+
   return (
     <div className=" md:border-r border-t  md:pr-20 justify-center   flex flex-col gap-4 ">
       <h1 className=" text-2xl pt-5 md:p-0 font-medium">Product Details</h1>
       <div className="  flex flex-col gap-4">
-        <Specification title="Description" body={BODY} />
+        <Specification title="Description" body={description} />
         <Specification title="FSSAI License" body="10014011001895" />
         <Specification title="Country Of Origin" body="India" />
         <Specification

@@ -9,3 +9,4 @@ export const MAIN_CATEGORY_GET = `${host}/mainCategory`;
 export const SUB_CATEGORY_GET = `${host}/subCategory`;
 
 export const PRODUCT = `${host}/product`;
+export const PRODUCT_DETAILS = `${host}/product-details`;
