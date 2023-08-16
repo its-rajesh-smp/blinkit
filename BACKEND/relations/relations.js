@@ -1,7 +1,9 @@
+const CartItem = require("../models/cartItems");
 const MainCategory = require("../models/mainCategory");
 const Product = require("../models/product");
 const ProductType = require("../models/productType");
 const SubCategory = require("../models/subCategory");
+const User = require("../models/user");
 
 module.exports = () => {
   MainCategory.hasMany(SubCategory, { foreignKey: "category" });
@@ -15,4 +17,9 @@ module.exports = () => {
 
   Product.hasMany(ProductType, { foreignKey: "productId" });
   ProductType.belongsTo(Product, { foreignKey: "productId" });
+
+  User.hasMany(CartItem);
+  CartItem.belongsTo(User);
+
+  CartItem.belongsTo(ProductType);
 };

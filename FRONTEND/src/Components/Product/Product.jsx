@@ -71,7 +71,7 @@ function Product({ className, data }) {
             ${currentType.price}
           </p>
         </div>
-        <AddProductBTN />
+        <AddProductBTN id={currentType.id} />
       </div>
     </div>
   );

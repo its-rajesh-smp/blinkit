@@ -10,3 +10,7 @@ export const SUB_CATEGORY_GET = `${host}/subCategory`;
 
 export const PRODUCT = `${host}/product`;
 export const PRODUCT_DETAILS = `${host}/product-details`;
+
+export const CART_ADD = `${host}/cart/add`;
+export const CART_DELETE = `${host}/cart`;
+export const CART_UPDATE = `${host}/cart/update`;

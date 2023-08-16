@@ -10,7 +10,7 @@ function Type({ discount, id, name, price }) {
         <p className=" text-xs">{name}</p>
         <p className=" text-sm font-semibold">${price}</p>
       </div>
-      <AddProductBTN />
+      <AddProductBTN id={id} />
     </div>
   );
 }
