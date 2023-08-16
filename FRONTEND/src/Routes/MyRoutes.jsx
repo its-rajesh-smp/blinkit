@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Homepage from "../Pages/Homepage";
 import ProductsPage from "../Pages/ProductsPage";
+import ProductPage from "../Pages/ProductPage";
 
 function MyRoutes() {
   return (
@@ -11,6 +12,7 @@ function MyRoutes() {
         path="/pl/:mainCategoryId/:subCategoryId"
         element={<ProductsPage />}
       />
+      <Route path="/pd/:productId" element={<ProductPage />} />
     </Routes>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import Product from "../Product";
+import Product from "../Product/Product";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import useFetch from "../../Hooks/useFetch";
 import { PRODUCT } from "../../Api/endpoints";

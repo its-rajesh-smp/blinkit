@@ -5,7 +5,7 @@ function PageWrapper({ className, children }) {
     <div
       className={`${
         className && className
-      }  w-full lg:w-[80%]  mx-auto flex flex-col justify-center`}
+      }  w-full lg:w-[85%]  mx-auto flex flex-col justify-center`}
     >
       {children}
     </div>
