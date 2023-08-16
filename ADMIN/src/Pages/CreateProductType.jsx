@@ -10,6 +10,7 @@ import {
   SUB_CATEGORY,
 } from "../Api/endpoints";
 import useFetch from "../Hooks/useFetch";
+import axios from "axios";
 
 function CreateProductType() {
   const [name, setName] = useState("");

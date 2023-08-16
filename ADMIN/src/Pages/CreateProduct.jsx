@@ -18,7 +18,7 @@ function CreateProduct() {
   const [category, setCategory] = useState(1);
   const [subCategory, setSubCategory] = useState(1);
 
-  const [state, setState] = useFetch(`${PRODUCT}/${subCategory}`);
+  const [state, setState] = useFetch(`${PRODUCT}/${category}/${subCategory}`);
 
   const onClickAddHandeler = async (e) => {
     e.preventDefault();

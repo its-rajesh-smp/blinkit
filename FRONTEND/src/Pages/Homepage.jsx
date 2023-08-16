@@ -11,9 +11,9 @@ function Homepage() {
       <TopBanner />
       <AdCarousel />
       <MainCategoryContainer />
-      <ProductCarousel />
-      <ProductCarousel />
-      <ProductCarousel />
+      <ProductCarousel title="Veg & Fruits" mainCategoryId="1" />
+      {/* <ProductCarousel /> */}
+      {/* <ProductCarousel /> */}
     </PageWrapper>
   );
 }

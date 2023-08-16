@@ -7,7 +7,10 @@ function MyRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
-      <Route path="/pl" element={<ProductsPage />} />
+      <Route
+        path="/pl/:mainCategoryId/:subCategoryId"
+        element={<ProductsPage />}
+      />
     </Routes>
   );
 }

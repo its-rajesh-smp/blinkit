@@ -7,6 +7,7 @@ import HeaderContext from "../Context/HeaderContext";
 import { useDispatch } from "react-redux";
 import { getUserAct } from "../Store/Actions/authActions";
 import LoadingPage from "../Components/UI/LoadingPage";
+import { setMainCategoryAct } from "../Store/Actions/mainCategoryAction";
 
 function App() {
   const { loginComponent } = useContext(HeaderContext);
@@ -15,6 +16,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getUserAct(setLoader));
+    dispatch(setMainCategoryAct());
   }, []);
 
   return !loader ? (

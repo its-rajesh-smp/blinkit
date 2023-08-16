@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Product({ className }) {
+function Product({ className, data }) {
+  const [currentType, setCurrentType] = useState(data.producttypes[0]);
+
   return (
     <div
       className={`${
@@ -18,13 +20,13 @@ function Product({ className }) {
       <div className=" flex justify-center">
         <img
           className=" w-24 h-24 object-cover object-center"
-          src="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/160a.jpg?ts=1689327537"
-          alt=""
+          src={JSON.parse(data.images)[0]}
+          alt="product image"
         />
       </div>
 
       {/* NAME */}
-      <p className="  text-sm font-semibold">Amul Salted Butter</p>
+      <p className="  text-sm font-semibold">{data.name}</p>
 
       {/* OFFER */}
       <div className=" absolute top-0 left-2 w-7 flex justify-center flex-col items-center text-white font-bold">
@@ -42,21 +44,38 @@ function Product({ className }) {
         </svg>
 
         <div className=" text-[9px] w-fit h-fit absolute">
-          <p>50%</p>
+          <p>{currentType.discount}%</p>
           <p>OFF</p>
         </div>
       </div>
 
       {/* TYPE */}
-      <select className=" text-xs bg-white  font-thin outline-none w-full">
-        <option>500g</option>
+      <select
+        onChange={(e) => setCurrentType(JSON.parse(e.target.value))}
+        value={JSON.stringify(currentType)}
+        className=" text-xs bg-white  font-thin outline-none w-full"
+      >
+        {data.producttypes &&
+          data.producttypes.map((type) => (
+            <option value={JSON.stringify(type)} key={type.id}>
+              {type.name}
+            </option>
+          ))}
       </select>
 
       {/* ADD BUTTON & PRICE */}
       <div className=" flex flex-col gap-2 md:flex-row  justify-between">
         <div className=" flex justify-between items-center md:block">
-          <p className=" text-sm font-semibold">$277</p>
-          <p className=" text-xs  text-gray-600 line-through">$277</p>
+          <p className=" text-sm font-semibold">
+            $
+            {Math.ceil(
+              currentType.price -
+                (currentType.price * currentType.discount) / 100
+            )}
+          </p>
+          <p className=" text-xs  text-gray-600 line-through">
+            ${currentType.price}
+          </p>
         </div>
         <button className=" bg-green-100 border border-green-700 w-full md:w-16  h-8 rounded-md font-semibold text-green-950  ">
           ADD

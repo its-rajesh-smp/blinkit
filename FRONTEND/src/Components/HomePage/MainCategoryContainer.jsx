@@ -1,10 +1,9 @@
 import React from "react";
 import MainCategory from "./UI/MainCategory";
-import useFetch from "../../Hooks/useFetch";
-import { MAIN_CATEGORY_GET } from "../../Api/endpoints";
+import { useSelector } from "react-redux";
 
 function MainCategoryContainer() {
-  const mainCategoryList = useFetch(MAIN_CATEGORY_GET);
+  const mainCategoryList = useSelector((state) => state.mainCategorySlice);
 
   return (
     <div className="  hideScrollbar  mt-6 overflow-scroll flex gap-5 justify-between ">
