@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
+import ProductDetailsContext from "../../../Context/ProductDetailsPageContext";
 
-function MainPhotoContainer() {
+function MainPhotoContainer({ mainImage }) {
+  const { images } = useContext(ProductDetailsContext);
+
   return (
-    <div className=" hidden md:block mx-auto w-[25rem] h-[25rem] border">
-      <img
-        className="w-full h-full object-cover object-center"
-        src="https://res.cloudinary.com/dcu6sympq/image/upload/v1683920213/grocery/fresh_vegetables/2_g4ecfh.webp"
-        alt=""
-      />
-    </div>
+    images && (
+      <div className=" hidden  overflow-hidden md:block mx-auto transition-all hover:shadow-xl w-[25rem] h-[25rem] ">
+        <img
+          className="w-full h-full hover:scale-150 transition-all object-cover object-center"
+          src={images[mainImage]}
+          alt="main product image"
+        />
+      </div>
+    )
   );
 }
 
