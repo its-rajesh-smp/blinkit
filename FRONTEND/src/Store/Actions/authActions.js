@@ -54,18 +54,21 @@ export const getUserAct = (setLoader) => {
       const { data } = await axios.post(USER_GET, { idToken: localIdToken });
 
       // Forming Cart
-      const { cartItems } = data;
       const total = { quantity: 0, price: 0 };
-      const cartObj = cartItems.reduce((prev, item) => {
-        total.price = total.price + +item.producttype.price * item.quantity;
-        total.quantity = total.quantity + item.quantity;
-        item.price = +item.producttype.price;
-        delete item.producttype;
-        return { ...prev, [item.producttypeId]: item };
+      const cartObj = data.cartItems.reduce((prev, item) => {
+        const obj = {
+          producttypeId: item.producttypeId,
+          quantity: item.quantity,
+          price: item.producttype.price,
+        };
+
+        total.quantity = total.quantity + obj.quantity;
+        total.price = total.price + obj.price * obj.quantity;
+
+        return { ...prev, [obj.producttypeId]: obj };
       }, {});
 
-      dispatch(setCart({ cart: cartItems, total, cartObj }));
-
+      dispatch(setCart({ cartObj, total }));
       dispatch(authUser(data));
     } catch (error) {
       console.log(error);

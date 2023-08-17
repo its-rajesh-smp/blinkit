@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCartAct,
@@ -14,27 +14,45 @@ function AddProductBTN({ id }) {
     cartObj[id] ? cartObj[id].quantity : 0
   );
 
+  // If The Id Change We Have To Change The Quantity As Well
+  useEffect(() => {
+    setQuantity(cartObj[id] ? cartObj[id].quantity : 0);
+  }, [id]);
+
+  // ON CLICK ADD
   const onClickAddHandeler = async (e) => {
     e.stopPropagation();
     if (!loader) {
       setLoader(true);
-      dispatch(addToCartAct(id, quantity + 1, setQuantity, setLoader));
+      dispatch(addToCartAct(id, Number(quantity + 1), setQuantity, setLoader));
     }
   };
 
+  // ON CLICK INCREAMENT
   const onClickIncreament = async (e) => {
     e.stopPropagation();
     if (!loader) {
       setLoader(true);
-      dispatch(updateCartQuantityAct(id, quantity + 1, setQuantity, setLoader));
+      dispatch(
+        updateCartQuantityAct(
+          id,
+          Number(quantity + 1),
+          setQuantity,
+          setLoader,
+          "INCREAMENT"
+        )
+      );
     }
   };
 
+  // ON CLICK DECREAMENT
   const onClickDecreament = async (e) => {
     e.stopPropagation();
     if (!loader) {
       setLoader(true);
-      dispatch(updateCartQuantityAct(id, quantity - 1, setQuantity, setLoader));
+      dispatch(
+        updateCartQuantityAct(id, Number(quantity - 1), setQuantity, setLoader)
+      );
     }
   };
 

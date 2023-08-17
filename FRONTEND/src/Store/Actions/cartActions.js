@@ -4,7 +4,12 @@ import { CART_ADD, CART_DELETE, CART_UPDATE } from "../../Api/endpoints";
 import { toast } from "react-toastify";
 import { setLoginComponent } from "../Reducer/headerLoginSlice";
 
-export const addToCartAct = (id, quantity, setQuantity, setLoader) => {
+export const addToCartAct = (
+  producttypeId,
+  quantity,
+  setQuantity,
+  setLoader
+) => {
   return async (dispatch, getState) => {
     try {
       const localIdToken = localStorage.getItem("blinkid_idToken");
@@ -15,10 +20,11 @@ export const addToCartAct = (id, quantity, setQuantity, setLoader) => {
         return;
       }
 
+      // GETTING THE ADDED DATA
       const { data } = await axios.post(
         CART_ADD,
         {
-          producttypeId: id,
+          producttypeId,
           quantity,
         },
         {
@@ -27,8 +33,6 @@ export const addToCartAct = (id, quantity, setQuantity, setLoader) => {
           },
         }
       );
-
-      console.log(data);
 
       dispatch(addToCart(data));
       setQuantity((p) => p + 1);
@@ -40,7 +44,13 @@ export const addToCartAct = (id, quantity, setQuantity, setLoader) => {
   };
 };
 
-export const updateCartQuantityAct = (id, quantity, setQuantity, setLoader) => {
+export const updateCartQuantityAct = (
+  producttypeId,
+  quantity,
+  setQuantity,
+  setLoader,
+  operation
+) => {
   return async (dispatch, getState) => {
     try {
       const localIdToken = localStorage.getItem("blinkid_idToken");
@@ -51,41 +61,34 @@ export const updateCartQuantityAct = (id, quantity, setQuantity, setLoader) => {
         return;
       }
 
-      // If The Quantity is 0 then remove from cart
       if (quantity === 0) {
-        const { data } = await axios.delete(`${CART_DELETE}/${id}`, {
+        /* -------------------------------------------------------------------------- */
+        /*                 If The Quantity is 0 then remove from cart                 */
+        /* -------------------------------------------------------------------------- */
+        const { data } = await axios.delete(`${CART_DELETE}/${producttypeId}`, {
           headers: {
             idToken: localIdToken,
           },
         });
 
-        const newTotal = { quantity: 0, price: 0 };
+        // Forming Cart
+        const newTotal = { ...getState().cartSlice.total };
+        newTotal.quantity = newTotal.quantity - 1;
+        newTotal.price = newTotal.price - data.price;
         const newCartObj = delete { ...getState().cartSlice.cartObj }[
           data.producttypeId
         ];
-        const newUpdatedCart = getState().cartSlice.cart.filter((item) => {
-          if (item.producttypeId != data.producttypeId) {
-            newTotal.price = item.price * item.quantity + newTotal.price;
-            newTotal.quantity = newTotal.quantity + item.quantity;
-            return true;
-          }
-        });
 
         // DISPATCHING NEW UPDATED CART
-        dispatch(
-          setCart({
-            cart: newUpdatedCart,
-            cartObj: newCartObj,
-            total: newTotal,
-          })
-        );
-      }
-      // Else Update The Cart
-      else {
+        dispatch(setCart({ total: newTotal, cartObj: newCartObj }));
+      } else {
+        /* -------------------------------------------------------------------------- */
+        /*                            Else Update The Cart                            */
+        /* -------------------------------------------------------------------------- */
         const { data } = await axios.post(
           CART_UPDATE,
           {
-            producttypeId: id,
+            producttypeId,
             quantity,
           },
           {
@@ -95,28 +98,21 @@ export const updateCartQuantityAct = (id, quantity, setQuantity, setLoader) => {
           }
         );
 
-        console.log(data);
-
         // FORMING NEW CARTOBJ CARTARRAY CARTTOTAL
-        const newCartObj = {};
-        const newTotal = { quantity: 0, price: 0 };
-        const newUpdatedCart = getState().cartSlice.cart.map((item) => {
-          if (item.producttypeId == data.producttypeId) {
-            newTotal.price = +data.quantity * +data.price + newTotal.price;
-            newTotal.quantity = newTotal.quantity + +data.quantity;
-            newCartObj[item.producttypeId] = data;
-            return data;
-          }
-          newTotal.price = newTotal.price + item.price * item.quantity;
-          newTotal.quantity = newTotal.quantity + item.quantity;
-          newCartObj[item.producttypeId] = item;
-          return item;
-        });
+        const newTotal = { ...getState().cartSlice.total };
+        if (operation === "INCREAMENT") {
+          newTotal.quantity = newTotal.quantity + 1;
+          newTotal.price = newTotal.price + data.price;
+        } else {
+          newTotal.quantity = newTotal.quantity - 1;
+          newTotal.price = newTotal.price - data.price;
+        }
+        const newCartObj = { ...getState().cartSlice.cartObj };
+        newCartObj[producttypeId] = data;
 
         // DISPATCHING NEW UPDATED CART
         dispatch(
           setCart({
-            cart: newUpdatedCart,
             cartObj: newCartObj,
             total: newTotal,
           })

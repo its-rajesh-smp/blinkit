@@ -24,7 +24,7 @@ exports.add = async (req, res) => {
       producttypeId,
     });
 
-    res.send({ producttypeId, price: productRes.price, quantity });
+    res.send({ producttypeId, quantity, price: productRes.price });
   } catch (error) {
     res.status(404).send(error.message);
   }
@@ -52,7 +52,7 @@ exports.update = async (req, res) => {
       { where: { userEmail: email, producttypeId } }
     );
 
-    res.send({ producttypeId, price: productRes.price, quantity });
+    res.send({ producttypeId, quantity, price: productRes.price });
   } catch (error) {
     res.status(404).send(error.message);
   }
@@ -85,7 +85,7 @@ exports.delete = async (req, res) => {
       return;
     }
 
-    res.send({ producttypeId, price: productRes.price });
+    res.send({ producttypeId, quantity: 0, price: productRes.price });
   } catch (error) {
     res.status(404).send(error.message);
   }
