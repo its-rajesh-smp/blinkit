@@ -45,7 +45,10 @@ function Product({ className, data }) {
 
       {/* TYPE */}
       <select
-        onChange={(e) => setCurrentType(JSON.parse(e.target.value))}
+        onClick={(e) => e.stopPropagation()}
+        onChange={(e) => {
+          setCurrentType(JSON.parse(e.target.value));
+        }}
         value={JSON.stringify(currentType)}
         className=" text-xs bg-white  font-thin outline-none w-full"
       >

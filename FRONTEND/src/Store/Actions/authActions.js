@@ -57,8 +57,10 @@ export const getUserAct = (setLoader) => {
       const { cartItems } = data;
       const total = { quantity: 0, price: 0 };
       const cartObj = cartItems.reduce((prev, item) => {
-        total.price = total.price + item.producttype.price;
+        total.price = total.price + +item.producttype.price * item.quantity;
         total.quantity = total.quantity + item.quantity;
+        item.price = +item.producttype.price;
+        delete item.producttype;
         return { ...prev, [item.producttypeId]: item };
       }, {});
 

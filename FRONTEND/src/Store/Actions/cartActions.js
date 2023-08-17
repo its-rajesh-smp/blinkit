@@ -28,6 +28,8 @@ export const addToCartAct = (id, quantity, setQuantity, setLoader) => {
         }
       );
 
+      console.log(data);
+
       dispatch(addToCart(data));
       setQuantity((p) => p + 1);
     } catch (error) {
@@ -62,8 +64,8 @@ export const updateCartQuantityAct = (id, quantity, setQuantity, setLoader) => {
           data.producttypeId
         ];
         const newUpdatedCart = getState().cartSlice.cart.filter((item) => {
-          if (item.producttypeId !== data.producttypeId) {
-            newTotal.price = newTotal.price + item.price;
+          if (item.producttypeId != data.producttypeId) {
+            newTotal.price = item.price * item.quantity + newTotal.price;
             newTotal.quantity = newTotal.quantity + item.quantity;
             return true;
           }
@@ -93,17 +95,19 @@ export const updateCartQuantityAct = (id, quantity, setQuantity, setLoader) => {
           }
         );
 
+        console.log(data);
+
         // FORMING NEW CARTOBJ CARTARRAY CARTTOTAL
         const newCartObj = {};
         const newTotal = { quantity: 0, price: 0 };
         const newUpdatedCart = getState().cartSlice.cart.map((item) => {
-          if (item.producttypeId === data.producttypeId) {
-            newTotal.price = newTotal.price + data.price;
-            newTotal.quantity = newTotal.quantity + data.quantity;
+          if (item.producttypeId == data.producttypeId) {
+            newTotal.price = +data.quantity * +data.price + newTotal.price;
+            newTotal.quantity = newTotal.quantity + +data.quantity;
             newCartObj[item.producttypeId] = data;
             return data;
           }
-          newTotal.price = newTotal.price + item.price;
+          newTotal.price = newTotal.price + item.price * item.quantity;
           newTotal.quantity = newTotal.quantity + item.quantity;
           newCartObj[item.producttypeId] = item;
           return item;

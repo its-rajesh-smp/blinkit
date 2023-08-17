@@ -11,8 +11,8 @@ const cartSlice = createSlice({
       state.cart = [action.payload, ...state.cart];
       state.cartObj = { [action.payload.id]: action.payload };
       state.total = {
-        quantity: state.total.quantity + action.payload.quantity,
-        price: state.total.price + action.payload.price,
+        quantity: state.total.quantity + +action.payload.quantity,
+        price: state.total.price + +action.payload.price,
       };
     },
     setCart: (state, action) => {

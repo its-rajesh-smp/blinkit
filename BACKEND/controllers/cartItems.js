@@ -23,7 +23,8 @@ exports.add = async (req, res) => {
       userEmail: email,
       producttypeId,
     });
-    res.send(dbRes);
+
+    res.send({ producttypeId, price: productRes.price, quantity });
   } catch (error) {
     res.status(404).send(error.message);
   }
