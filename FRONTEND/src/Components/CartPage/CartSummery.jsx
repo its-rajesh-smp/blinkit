@@ -1,5 +1,6 @@
 import React from "react";
 import InputButton from "../Input/InputButton";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function CartSummery() {
@@ -20,12 +21,12 @@ function CartSummery() {
         <h1>{total.quantity}$</h1>
       </div>
 
-      <div className=" flex justify-end mt-10">
+      <Link to={"/checkout"} className=" flex justify-end mt-10">
         <InputButton
           className=" bg-green-600 text-white w-fit px-5 h-10 rounded-md"
           placeHolder="Checkout"
         />
-      </div>
+      </Link>
     </div>
   );
 }
