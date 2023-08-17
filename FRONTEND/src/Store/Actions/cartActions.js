@@ -1,6 +1,6 @@
 import axios from "axios";
 import { addToCart, setCart } from "../Reducer/cartSlice";
-import { CART_ADD, CART_DELETE, CART_UPDATE } from "../../Api/endpoints";
+import { CART_ADD, CART, CART_UPDATE } from "../../Api/endpoints";
 import { toast } from "react-toastify";
 import { setLoginComponent } from "../Reducer/headerLoginSlice";
 
@@ -33,7 +33,7 @@ export const addToCartAct = (
           },
         }
       );
-
+      console.log(data);
       dispatch(addToCart(data));
       setQuantity((p) => p + 1);
     } catch (error) {
@@ -65,19 +65,20 @@ export const updateCartQuantityAct = (
         /* -------------------------------------------------------------------------- */
         /*                 If The Quantity is 0 then remove from cart                 */
         /* -------------------------------------------------------------------------- */
-        const { data } = await axios.delete(`${CART_DELETE}/${producttypeId}`, {
+        const { data } = await axios.delete(`${CART}/${producttypeId}`, {
           headers: {
             idToken: localIdToken,
           },
         });
 
+        console.log(data);
+
         // Forming Cart
         const newTotal = { ...getState().cartSlice.total };
         newTotal.quantity = newTotal.quantity - 1;
         newTotal.price = newTotal.price - data.price;
-        const newCartObj = delete { ...getState().cartSlice.cartObj }[
-          data.producttypeId
-        ];
+        const newCartObj = { ...getState().cartSlice.cartObj };
+        delete newCartObj[producttypeId];
 
         // DISPATCHING NEW UPDATED CART
         dispatch(setCart({ total: newTotal, cartObj: newCartObj }));

@@ -1,4 +1,5 @@
 const CartItem = require("../models/cartItems");
+const Product = require("../models/product");
 const ProductType = require("../models/productType");
 
 exports.add = async (req, res) => {
@@ -85,7 +86,34 @@ exports.delete = async (req, res) => {
       return;
     }
 
-    res.send({ producttypeId, quantity: 0, price: productRes.price });
+    res.send({
+      producttypeId: +producttypeId,
+      quantity: 0,
+      price: productRes.price,
+    });
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
+};
+
+exports.get = async (req, res) => {
+  try {
+    const { email } = req.user;
+
+    // GETTING THE CARTITEMS WITH PRODUCTTYPE AND PRODUCT
+    const dbRes = await CartItem.findAll({
+      where: { userEmail: email },
+      attributes: ["producttypeId", "quantity"],
+      include: [
+        {
+          model: ProductType,
+          attributes: ["price", "name"],
+          include: { model: Product, attributes: ["name", "images"] },
+        },
+      ],
+    });
+
+    res.send(dbRes);
   } catch (error) {
     res.status(404).send(error.message);
   }
