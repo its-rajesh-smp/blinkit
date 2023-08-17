@@ -8,10 +8,12 @@ function SmallPhotoContainer({ setMainImage, mainImage }) {
     setMainImage(index);
   }
 
+  const imagesArr = images ? JSON.parse(images) : [];
+
   return (
     <div className="  hideScrollbar  mx-auto w-[70vw]  md:w-[25rem] overflow-scroll flex gap-5">
-      {images &&
-        images.map((url, index) => (
+      {imagesArr &&
+        imagesArr.map((url, index) => (
           <Image
             mainImage={mainImage}
             setMainImageHandeler={setMainImageHandeler}
