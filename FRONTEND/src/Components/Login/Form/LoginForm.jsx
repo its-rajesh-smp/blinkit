@@ -3,19 +3,19 @@ import InputText from "../../Input/InputText";
 import InputButton from "../../Input/InputButton";
 import Loader from "../../UI/Loader";
 import { MdClose } from "react-icons/md";
-import HeaderContext from "../../../Context/HeaderContext";
+
 import { useDispatch } from "react-redux";
 import {
   createUserAct,
   loginUserAct,
 } from "../../../Store/Actions/authActions";
+import { hideLoginComponent } from "../../../Store/Reducer/headerLoginSlice";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginForm, switchLoginForm] = useState(true);
   const [loader, setLoader] = useState(false);
-  const { setLoginComponentHandeler } = useContext(HeaderContext);
   const dispatch = useDispatch();
 
   /* -------------------------------------------------------------------------- */
@@ -50,7 +50,7 @@ function LoginForm() {
   /*                             ON CLICK CLOSE BTN                             */
   /* -------------------------------------------------------------------------- */
   function closeBtnHandeler() {
-    setLoginComponentHandeler();
+    dispatch(hideLoginComponent());
   }
 
   return (

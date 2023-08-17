@@ -15,12 +15,10 @@ const ProductDetailsContext = React.createContext({
 const ProductDetailsProvider = ({ children }) => {
   const { productId } = useParams();
   const product = useFetch(`${PRODUCT_DETAILS}/${productId}`);
-
+  console.log(product);
   if (product) {
     product.images = JSON.parse(product.images);
   }
-
-  console.log(product);
 
   return (
     <ProductDetailsContext.Provider value={{ ...product }}>

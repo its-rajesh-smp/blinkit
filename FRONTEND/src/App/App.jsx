@@ -1,16 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../Components/Header/Header";
 import Login from "../Components/Login/Login";
 import MyRoutes from "../Routes/MyRoutes";
 import "./App.css";
-import HeaderContext from "../Context/HeaderContext";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserAct } from "../Store/Actions/authActions";
 import LoadingPage from "../Components/UI/LoadingPage";
 import { setMainCategoryAct } from "../Store/Actions/mainCategoryAction";
+import AlertContainer from "../Components/UI/AlertContainer";
 
 function App() {
-  const { loginComponent } = useContext(HeaderContext);
+  const { loginComponent } = useSelector((state) => state.headerSlice);
   const [loader, setLoader] = useState(true);
   const dispatch = useDispatch();
 
@@ -20,11 +20,14 @@ function App() {
   }, []);
 
   return !loader ? (
-    <div className=" pb-40 md:pb-0">
-      <Header />
-      {loginComponent && <Login />}
-      <MyRoutes />
-    </div>
+    <>
+      <AlertContainer />
+      <div className=" pb-40 md:pb-0">
+        <Header />
+        {loginComponent && <Login />}
+        <MyRoutes />
+      </div>
+    </>
   ) : (
     <LoadingPage />
   );

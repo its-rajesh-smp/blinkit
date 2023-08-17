@@ -1,5 +1,6 @@
 import axios from "axios";
 import { USER_GET, USER_LOGIN, USER_SIGNUP } from "../../Api/endpoints";
+import { toast } from "react-toastify";
 import { authUser } from "../Reducer/authSlice";
 import { setCart } from "../Reducer/cartSlice";
 
@@ -15,6 +16,7 @@ export const createUserAct = (email, password, setLoader, closeBtnHandeler) => {
       closeBtnHandeler();
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data);
     }
     setLoader(false);
   };
@@ -32,6 +34,7 @@ export const loginUserAct = (email, password, setLoader, closeBtnHandeler) => {
       closeBtnHandeler();
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data);
     }
     setLoader(false);
   };
@@ -64,6 +67,7 @@ export const getUserAct = (setLoader) => {
       dispatch(authUser(data));
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data);
     }
     setLoader(false);
   };

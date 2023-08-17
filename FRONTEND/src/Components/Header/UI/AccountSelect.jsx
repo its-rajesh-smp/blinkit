@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { BiUserCircle } from "react-icons/bi";
-import HeaderContext from "../../../Context/HeaderContext";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoginComponent } from "../../../Store/Reducer/headerLoginSlice";
 
 function AccountSelect() {
   const { auth } = useSelector((state) => state.authSlice);
-  const { setLoginComponentHandeler } = useContext(HeaderContext);
+  const dispatch = useDispatch();
 
   return (
     <div className=" col-start-5  row-start-1 md:row-auto md:col-auto flex  h-full justify-center  items-center gap-2 text-xl">
@@ -19,7 +19,10 @@ function AccountSelect() {
           <BiUserCircle className=" text-4xl block md:hidden" />
         </>
       ) : (
-        <p className=" cursor-pointer " onClick={setLoginComponentHandeler}>
+        <p
+          className=" cursor-pointer "
+          onClick={() => dispatch(setLoginComponent())}
+        >
           Login
         </p>
       )}

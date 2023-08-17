@@ -1,12 +1,17 @@
 import axios from "axios";
 import { addToCart, setCart } from "../Reducer/cartSlice";
 import { CART_ADD, CART_DELETE, CART_UPDATE } from "../../Api/endpoints";
+import { toast } from "react-toastify";
+import { setLoginComponent } from "../Reducer/headerLoginSlice";
 
-export const addToCartAct = (id, quantity, setQuantity) => {
+export const addToCartAct = (id, quantity, setQuantity, setLoader) => {
   return async (dispatch, getState) => {
     try {
       const localIdToken = localStorage.getItem("blinkid_idToken");
       if (!localIdToken) {
+        toast.error("To add in cart u have to login..");
+        setLoader(false);
+        dispatch(setLoginComponent());
         return;
       }
 
@@ -27,15 +32,20 @@ export const addToCartAct = (id, quantity, setQuantity) => {
       setQuantity((p) => p + 1);
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
+    setLoader(false);
   };
 };
 
-export const updateCartQuantityAct = (id, quantity, setQuantity) => {
+export const updateCartQuantityAct = (id, quantity, setQuantity, setLoader) => {
   return async (dispatch, getState) => {
     try {
       const localIdToken = localStorage.getItem("blinkid_idToken");
       if (!localIdToken) {
+        toast.error("To add in cart u have to login..");
+        setLoader(false);
+        dispatch(setLoginComponent());
         return;
       }
 
@@ -48,7 +58,9 @@ export const updateCartQuantityAct = (id, quantity, setQuantity) => {
         });
 
         const newTotal = { quantity: 0, price: 0 };
-        const newCartObj = delete { ...getState().cartSlice.cartObj }[data.id];
+        const newCartObj = delete { ...getState().cartSlice.cartObj }[
+          data.producttypeId
+        ];
         const newUpdatedCart = getState().cartSlice.cart.filter((item) => {
           if (item.producttypeId !== data.producttypeId) {
             newTotal.price = newTotal.price + item.price;
@@ -81,8 +93,6 @@ export const updateCartQuantityAct = (id, quantity, setQuantity) => {
           }
         );
 
-        console.log(data);
-
         // FORMING NEW CARTOBJ CARTARRAY CARTTOTAL
         const newCartObj = {};
         const newTotal = { quantity: 0, price: 0 };
@@ -109,8 +119,10 @@ export const updateCartQuantityAct = (id, quantity, setQuantity) => {
         );
       }
       setQuantity(quantity);
+      setLoader(false);
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
   };
 };
