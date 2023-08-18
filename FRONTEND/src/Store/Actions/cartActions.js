@@ -33,7 +33,7 @@ export const addToCartAct = (
           },
         }
       );
-      console.log(data);
+
       dispatch(addToCart(data));
       setQuantity((p) => p + 1);
     } catch (error) {

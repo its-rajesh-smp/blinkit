@@ -3,13 +3,20 @@ import InputText from "../../Input/InputText";
 import InputButton from "../../Input/InputButton";
 import { Autocomplete } from "@react-google-maps/api";
 import { useDispatch, useSelector } from "react-redux";
-import { onChange } from "../../../Store/Reducer/selectAddressSlice";
+import {
+  hideAddressForm,
+  assignSelectAddress,
+} from "../../../Store/Reducer/selectAddressSlice";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import {
+  createAddressAct,
+  editAddressAct,
+} from "../../../Store/Actions/addressActions";
 
 function AddressForm() {
   const [autoComplete, setAutoComplete] = useState(null);
-  const { name, address, phoneNumber } = useSelector(
-    (state) => state.selectAddressSlice
-  );
+  const { name, id, operation, address, phoneNumber, addressPosition } =
+    useSelector((state) => state.selectAddressSlice);
 
   const dispatch = useDispatch();
 
@@ -21,16 +28,16 @@ function AddressForm() {
       address: place.formatted_address,
       addressPosition: addressPos,
     };
-    dispatch(onChange(payload));
+    dispatch(assignSelectAddress(payload));
   };
 
   // ON CHANGE NAME
   const onChangeName = (value) => {
-    dispatch(onChange({ name: value }));
+    dispatch(assignSelectAddress({ name: value }));
   };
   // ON CHANGE NAME
   const onChangePhoneNumber = (value) => {
-    dispatch(onChange({ phoneNumber: value }));
+    dispatch(assignSelectAddress({ phoneNumber: value }));
   };
 
   // On CHANGE ADDRESS
@@ -39,7 +46,27 @@ function AddressForm() {
       address: e.target.value,
       addressPosition: { lat: 0, lng: 0 },
     };
-    dispatch(onChange(payload));
+    dispatch(assignSelectAddress(payload));
+  };
+
+  // On Click Close Btn
+  const onClickCloseHandeler = (e) => {
+    e.preventDefault();
+    dispatch(hideAddressForm());
+  };
+
+  // On Click Submit Handeler
+  const onClickSubmitHandeler = (e) => {
+    e.preventDefault();
+    const payload = {
+      name,
+      phoneNumber,
+      address,
+      addressPosition: JSON.stringify(addressPosition),
+    };
+    operation === "EDIT"
+      ? dispatch(editAddressAct(payload, id))
+      : dispatch(createAddressAct(payload));
   };
 
   return (
@@ -49,7 +76,17 @@ function AddressForm() {
         className="  flex flex-col justify-between h-full"
       >
         <div className="flex flex-col gap-4">
-          <h1 className=" font-bold text-2xl">Enter Your Delivery Location</h1>
+          <div className=" flex justify-between items-center">
+            <h1 className=" font-bold text-xl">
+              {operation === "EDIT" ? "Edit" : "Enter"} Your Delivery Location{" "}
+            </h1>
+            <button
+              onClick={onClickCloseHandeler}
+              className=" flex justify-center items-center  hover:text-red-600 transition-all text-red-400 text-2xl"
+            >
+              <AiOutlineCloseCircle />
+            </button>
+          </div>
           <InputText
             value={name}
             onChange={onChangeName}
@@ -83,9 +120,13 @@ function AddressForm() {
           </Autocomplete>
         </div>
         <div>
+          <p className=" py-2 text-center text-xs">
+            Choose nearest avalable location on goole earth
+          </p>
           <InputButton
+            onClick={onClickSubmitHandeler}
             className="  bg-green-300 h-10"
-            placeHolder="SAVE ADDRESS"
+            placeHolder={`${operation === "EDIT" ? "EDIT" : "SAVE"} ADDRESS`}
           />
         </div>
       </form>

@@ -8,23 +8,47 @@ const center = {
 const selectAddressSlice = createSlice({
   name: "on Click select address fields",
   initialState: {
+    id: "",
     name: "",
     address: "",
     phoneNumber: "",
     addressPosition: center,
+    operation: "ADD",
+    addressForm: false,
   },
   reducers: {
     setAddress: (state, action) => {
+      state.id = action.payload.id;
       state.name = action.payload.name;
       state.address = action.payload.address;
       state.phoneNumber = action.payload.phoneNumber;
       state.addressPosition = action.payload.addressPosition;
+      state.operation = action.payload.operation;
     },
-    onChange: (state, action) => {
+    assignSelectAddress: (state, action) => {
       Object.assign(state, action.payload);
+    },
+    showAddressForm: (state) => {
+      state.addressForm = true;
+    },
+    hideAddressForm: (state) => {
+      return {
+        id: "",
+        name: "",
+        address: "",
+        phoneNumber: "",
+        addressPosition: center,
+        operation: "ADD",
+        addressForm: false,
+      };
     },
   },
 });
 
 export default selectAddressSlice;
-export const { setAddress, onChange } = selectAddressSlice.actions;
+export const {
+  setAddress,
+  assignSelectAddress,
+  showAddressForm,
+  hideAddressForm,
+} = selectAddressSlice.actions;

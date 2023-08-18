@@ -4,6 +4,7 @@ import mainCategorySlice from "../Reducer/MainCategorySlice";
 import cartSlice from "../Reducer/cartSlice";
 import headerSlice from "../Reducer/headerLoginSlice";
 import selectAddressSlice from "../Reducer/selectAddressSlice";
+import addressSlice from "../Reducer/addressSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     cartSlice: cartSlice.reducer,
     headerSlice: headerSlice.reducer,
     selectAddressSlice: selectAddressSlice.reducer,
+    addressSlice: addressSlice.reducer,
   },
 });
 

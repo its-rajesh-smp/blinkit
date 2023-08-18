@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import findAddress from "../../../Hooks/findAddress";
 import { useDispatch, useSelector } from "react-redux";
-import { onChange } from "../../../Store/Reducer/selectAddressSlice";
+import { assignSelectAddress } from "../../../Store/Reducer/selectAddressSlice";
 
 function AddressMap() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function AddressMap() {
       lng: event.latLng.lng(),
     };
     const address = await findAddress(newMarker);
-    dispatch(onChange(address));
+    dispatch(assignSelectAddress(address));
   };
 
   return (

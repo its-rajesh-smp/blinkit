@@ -3,6 +3,7 @@ import { USER_GET, USER_LOGIN, USER_SIGNUP } from "../../Api/endpoints";
 import { toast } from "react-toastify";
 import { authUser } from "../Reducer/authSlice";
 import { setCart } from "../Reducer/cartSlice";
+import { setAllAddress } from "../Reducer/addressSlice";
 
 export const createUserAct = (email, password, setLoader, closeBtnHandeler) => {
   return async (dispatch, getState) => {
@@ -50,6 +51,7 @@ export const getUserAct = (setLoader) => {
         setLoader(false);
         return;
       }
+
       // Getting User Details with Cart
       const { data } = await axios.post(USER_GET, { idToken: localIdToken });
 
@@ -68,6 +70,18 @@ export const getUserAct = (setLoader) => {
         return { ...prev, [obj.producttypeId]: obj };
       }, {});
 
+      delete data.cartItems;
+      dispatch(
+        setAllAddress(
+          data.addresses.map((address) => {
+            return {
+              ...address,
+              addressPosition: JSON.parse(address.addressPosition),
+            };
+          })
+        )
+      );
+      delete data.addresses;
       dispatch(setCart({ cartObj, total }));
       dispatch(authUser(data));
     } catch (error) {

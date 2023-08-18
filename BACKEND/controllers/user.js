@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const { createJwt, verifyJwt } = require("../services/jwt");
 const CartItem = require("../models/cartItems");
 const ProductType = require("../models/productType");
+const Address = require("../models/address");
 
 exports.signUp = async (req, res) => {
   try {
@@ -72,6 +73,7 @@ exports.get = async (req, res) => {
           model: CartItem,
           include: [{ model: ProductType, attributes: ["price"] }],
         },
+        Address,
       ],
     });
 

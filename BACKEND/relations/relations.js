@@ -1,3 +1,4 @@
+const Address = require("../models/address");
 const CartItem = require("../models/cartItems");
 const MainCategory = require("../models/mainCategory");
 const Product = require("../models/product");
@@ -23,4 +24,7 @@ module.exports = () => {
 
   ProductType.hasMany(CartItem);
   CartItem.belongsTo(ProductType);
+
+  User.hasMany(Address);
+  Address.belongsTo(User);
 };

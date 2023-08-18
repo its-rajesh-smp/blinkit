@@ -11,7 +11,7 @@ export default async function findAddress(position) {
       address: data.results[0].formatted_address,
       addressPosition: data.results[0].geometry.location,
     };
-
+    console.log(addressObj);
     return addressObj;
   } catch (error) {
     console.log(error);

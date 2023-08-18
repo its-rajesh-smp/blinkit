@@ -17,6 +17,7 @@ const subCategory = require("./routes/subCategory");
 const product = require("./routes/product");
 const productType = require("./routes/productType");
 const cartItems = require("./routes/cartItems");
+const address = require("./routes/address");
 
 // Relations
 require("./relations/relations")();
@@ -29,6 +30,7 @@ app.use(subCategory);
 app.use(product);
 app.use(productType);
 app.use(cartItems);
+app.use(address);
 
 // App Start
 sequelize
