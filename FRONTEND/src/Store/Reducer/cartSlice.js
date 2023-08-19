@@ -27,7 +27,15 @@ const cartSlice = createSlice({
     hideCart: (state) => {
       state.cartVisibility = false;
     },
+    clearCart: () => {
+      return {
+        cartObj: {},
+        total: { quantity: 0, price: 0 },
+        cartVisibility: false,
+      };
+    },
   },
 });
 export default cartSlice;
-export const { addToCart, setCart, showCart, hideCart } = cartSlice.actions;
+export const { addToCart, setCart, showCart, hideCart, clearCart } =
+  cartSlice.actions;

@@ -1,6 +1,9 @@
 import { RZP_KEY_ID } from "../../../cred";
 import { ORDER_CREATE, ORDER_FAILED, ORDER_SUCCESS } from "../../Api/endpoints";
 import axios from "axios";
+import { clearCart } from "../Reducer/cartSlice";
+import { toast } from "react-toastify";
+import { clearSelectedAddress } from "../Reducer/addressSlice";
 
 export const placeOrderAct = () => {
   return async (dispatch, getState) => {
@@ -26,6 +29,13 @@ export const placeOrderAct = () => {
         }
       );
 
+      // FUNCTION TO CLEAR CART ITEMS
+      function clearCartItemsAfterPaymentSuccess() {
+        toast.success("Order Placed");
+        dispatch(clearCart());
+        dispatch(clearSelectedAddress());
+      }
+
       // RAZORYPAY OPTIONS
       const options = {
         key: RZP_KEY_ID,
@@ -37,7 +47,12 @@ export const placeOrderAct = () => {
           color: "#F1C40F",
         },
         handler: (resopnse) =>
-          onPaymentSuccess(resopnse, localIdToken, selectedAddressId),
+          onPaymentSuccess(
+            resopnse,
+            localIdToken,
+            selectedAddressId,
+            clearCartItemsAfterPaymentSuccess
+          ),
       };
 
       // RAZORPAY INSTANCE
@@ -50,8 +65,6 @@ export const placeOrderAct = () => {
 
       // SHOWING PAYMENT MODAL
       rzp1.open();
-
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -61,7 +74,12 @@ export const placeOrderAct = () => {
 /* -------------------------------------------------------------------------- */
 /*                             ON PAYMENT SUCCESS                             */
 /* -------------------------------------------------------------------------- */
-async function onPaymentSuccess(resopnse, idToken, selectedAddressId) {
+async function onPaymentSuccess(
+  resopnse,
+  idToken,
+  selectedAddressId,
+  clearCartItemsAfterPaymentSuccess
+) {
   try {
     const { data } = await axios.post(
       ORDER_SUCCESS,
@@ -78,6 +96,7 @@ async function onPaymentSuccess(resopnse, idToken, selectedAddressId) {
     );
 
     console.log(data);
+    clearCartItemsAfterPaymentSuccess();
   } catch (error) {
     console.log(error);
   }
@@ -102,6 +121,7 @@ async function onPaymentFailed(response, localIdToken, paymentOrderId) {
     );
 
     console.log(data);
+    toast.error(response.error.description);
   } catch (error) {
     console.log(error);
   }

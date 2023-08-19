@@ -12,9 +12,16 @@ const addressSlice = createSlice({
     selectAddress: (state, action) => {
       state.selectedAddress = action.payload;
     },
+    clearSelectedAddress: (state) => {
+      state.selectedAddress = {};
+    },
   },
 });
 
 export default addressSlice;
-export const { selectAddress, addNewAddress, setAllAddress } =
-  addressSlice.actions;
+export const {
+  selectAddress,
+  clearSelectedAddress,
+  addNewAddress,
+  setAllAddress,
+} = addressSlice.actions;
