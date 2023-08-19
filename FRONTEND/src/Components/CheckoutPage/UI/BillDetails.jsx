@@ -5,6 +5,7 @@ import { placeOrderAct } from "../../../Store/Actions/placeOrderAction";
 
 function BillDetails() {
   const { selectedAddress } = useSelector((state) => state.addressSlice);
+  const { total } = useSelector((state) => state.cartSlice);
   const dispatch = useDispatch();
 
   // ON CLICK PLACE ORDER BTN
@@ -19,7 +20,7 @@ function BillDetails() {
       <div className=" flex flex-col gap-2  ">
         <p className=" flex justify-between mt-5 pt-5 border-t-2 text-xs ">
           <span>MRP</span>
-          <span>Rs. 19.00</span>
+          <span>Rs. {total.price}.00</span>
         </p>
         <p className=" flex justify-between mb-5 pb-5 text-xs border-b-2">
           <span>Delivery charge</span>
@@ -27,10 +28,10 @@ function BillDetails() {
         </p>
         <p className=" flex  justify-between text-xs font-bold">
           <span>Grand total</span>
-          <span>Rs. 19.00</span>
+          <span>Rs. {total.price}.00</span>
         </p>
       </div>
-      {Object.keys(selectedAddress).length !== 0 && (
+      {Object.keys(selectedAddress).length !== 0 && total.quantity !== 0 && (
         <InputButton
           onClick={onClickPlaceOrderBtnHandeler}
           className="h-10 bg-green-600 mt-10 w-fit px-5 text-white"

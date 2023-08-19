@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import AddNewAddress from "./UI/AddNewAddress";
 import Address from "./UI/Address";
 import NewAddressCard from "./NewAddressCard";
 import { useSelector } from "react-redux";
+import NoAddressPresent from "./UI/NoAddressPresent";
 
 function AddressContainer({ className }) {
   const { allAddress } = useSelector((state) => state.addressSlice);
@@ -10,11 +11,19 @@ function AddressContainer({ className }) {
 
   return (
     <div className={`${className && className} flex flex-col gap-2`}>
-      <AddNewAddress />
       {addressForm && <NewAddressCard />}
-      {allAddress.map((address) => (
-        <Address key={address.id} data={address} />
-      ))}
+      {allAddress.length > 0 ? (
+        <>
+          <AddNewAddress />
+          {allAddress.map((address) => (
+            <Address key={address.id} data={address} />
+          ))}
+        </>
+      ) : (
+        <>
+          <NoAddressPresent />
+        </>
+      )}
     </div>
   );
 }

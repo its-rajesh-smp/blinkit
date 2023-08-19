@@ -18,7 +18,7 @@ function UserDropDown({ showOptions }) {
       />
       <DropdownItem
         icon={<AiOutlineHome className=" text-lg" />}
-        path="/"
+        path="/address"
         onClickDropdown={onClickDropdown}
         title="Saved Address"
       />
