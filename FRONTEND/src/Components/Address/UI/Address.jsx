@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TiTick } from "react-icons/ti";
 import { assignSelectAddress } from "../../../Store/Reducer/selectAddressSlice";
 import { deleteAddressAct } from "../../../Store/Actions/addressActions";
+import { selectAddress } from "../../../Store/Reducer/addressSlice";
 
 function Address({ data }) {
-  const [selected, setSelected] = useState(false);
+  const { selectedAddress } = useSelector((state) => state.addressSlice);
+  const isSelected = data.id === selectedAddress.id;
   const dispatch = useDispatch();
 
   // ON CLICK EDIT ADDRESS BTN
@@ -23,7 +25,7 @@ function Address({ data }) {
   return (
     <div
       className={`${
-        selected ? "bg-green-200" : "bg-white"
+        isSelected ? "bg-green-200" : "bg-white"
       } p-5 border transition-all flex justify-between items-center`}
     >
       <div className="text-xs flex flex-col gap-1">
@@ -39,7 +41,7 @@ function Address({ data }) {
         </div>
       </div>
       <div>
-        <SelectBtn selected={selected} setSelected={setSelected} />
+        <SelectBtn data={data} isSelected={isSelected} />
       </div>
     </div>
   );
@@ -47,20 +49,26 @@ function Address({ data }) {
 
 export default Address;
 
-function SelectBtn({ selected, setSelected }) {
+function SelectBtn({ isSelected, data }) {
+  const dispatch = useDispatch();
+
   // On Click Select Box
   const onClickHandeler = () => {
-    setSelected((p) => !p);
+    if (!isSelected) {
+      dispatch(selectAddress(data));
+    } else {
+      dispatch(selectAddress({}));
+    }
   };
 
   return (
     <div
       onClick={onClickHandeler}
       className={`${
-        selected && "border-gray-700"
+        isSelected && "border-gray-700"
       } flex cursor-pointer transition-all justify-center items-center w-10 h-10 border`}
     >
-      {selected && <TiTick className=" text-2xl" />}
+      {isSelected && <TiTick className=" text-2xl" />}
     </div>
   );
 }

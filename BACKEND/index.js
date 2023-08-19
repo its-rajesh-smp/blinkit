@@ -18,6 +18,7 @@ const product = require("./routes/product");
 const productType = require("./routes/productType");
 const cartItems = require("./routes/cartItems");
 const address = require("./routes/address");
+const orderItem = require("./routes/orderItem");
 
 // Relations
 require("./relations/relations")();
@@ -31,6 +32,7 @@ app.use(product);
 app.use(productType);
 app.use(cartItems);
 app.use(address);
+app.use(orderItem);
 
 // App Start
 sequelize

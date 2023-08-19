@@ -1,6 +1,17 @@
 import React from "react";
+import InputButton from "../../Input/InputButton";
+import { useDispatch, useSelector } from "react-redux";
+import { placeOrderAct } from "../../../Store/Actions/placeOrderAction";
 
 function BillDetails() {
+  const { selectedAddress } = useSelector((state) => state.addressSlice);
+  const dispatch = useDispatch();
+
+  // ON CLICK PLACE ORDER BTN
+  const onClickPlaceOrderBtnHandeler = () => {
+    dispatch(placeOrderAct());
+  };
+
   return (
     <div className="w-full md:w-[40%] flex flex-col  p-10 ">
       <h1 className=" text-2xl font-medium">Bill Details</h1>
@@ -19,6 +30,13 @@ function BillDetails() {
           <span>Rs. 19.00</span>
         </p>
       </div>
+      {Object.keys(selectedAddress).length !== 0 && (
+        <InputButton
+          onClick={onClickPlaceOrderBtnHandeler}
+          className="h-10 bg-green-600 mt-10 w-fit px-5 text-white"
+          placeHolder="Place Order"
+        />
+      )}
     </div>
   );
 }

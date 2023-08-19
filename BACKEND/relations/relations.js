@@ -1,6 +1,8 @@
 const Address = require("../models/address");
 const CartItem = require("../models/cartItems");
 const MainCategory = require("../models/mainCategory");
+const OrderItem = require("../models/orderItem");
+const Payment = require("../models/payment");
 const Product = require("../models/product");
 const ProductType = require("../models/productType");
 const SubCategory = require("../models/subCategory");
@@ -27,4 +29,15 @@ module.exports = () => {
 
   User.hasMany(Address);
   Address.belongsTo(User);
+
+  User.hasMany(OrderItem);
+  OrderItem.belongsTo(User);
+  OrderItem.belongsTo(ProductType);
+  OrderItem.belongsTo(Product);
+
+  User.hasMany(Payment);
+  Payment.belongsTo(User);
+
+  Payment.hasMany(OrderItem);
+  OrderItem.belongsTo(Payment);
 };
