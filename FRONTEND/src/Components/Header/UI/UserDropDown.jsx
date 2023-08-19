@@ -12,7 +12,7 @@ function UserDropDown({ showOptions }) {
     <div className="top-0 flex  flex-col shadow-2xl px-2 py-5 gap-4 rounded-md mt-40 md:mt-20 right-0 absolute    w-60 bg-white">
       <DropdownItem
         icon={<AiOutlineShoppingCart className=" text-lg" />}
-        path="/"
+        path="/myOrder"
         onClickDropdown={onClickDropdown}
         title="My Orders"
       />
