@@ -13,6 +13,6 @@ router.post(
   authentication,
   orderItemController.onPaymentFailed
 );
-router.get("/order", orderItemController.getAll);
+router.get("/order", authentication, orderItemController.getAll);
 
 module.exports = router;

@@ -46,8 +46,6 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.getAll = async (req, res) => {};
-
 exports.onPaymentSuccess = async (req, res) => {
   try {
     const { email } = req.user;
@@ -109,6 +107,19 @@ exports.onPaymentFailed = async (req, res) => {
     );
 
     res.send(false);
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
+};
+
+exports.getAll = async (req, res) => {
+  try {
+    const { email } = req.user;
+    const dbRes = await OrderItem.findAll({
+      where: { userEmail: email },
+      include: [{ model: ProductType, include: [Product] }],
+    });
+    res.send(dbRes);
   } catch (error) {
     res.status(404).send(error.message);
   }

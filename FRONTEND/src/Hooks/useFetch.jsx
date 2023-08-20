@@ -3,7 +3,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setLoginComponent } from "../Store/Reducer/headerLoginSlice";
 
-function useFetch(path, authentication) {
+function useFetch(path, authentication, setLoader) {
   const [state, setState] = useState(null);
   const dispatch = useDispatch();
 
@@ -24,6 +24,9 @@ function useFetch(path, authentication) {
 
       const { data } = await axios.get(path, { headers: { ...headers } });
       setState(data);
+      if (setLoader) {
+        setLoader(false);
+      }
     })();
   }, [path]);
 

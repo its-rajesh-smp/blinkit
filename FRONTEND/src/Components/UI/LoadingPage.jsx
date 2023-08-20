@@ -1,9 +1,11 @@
 import React from "react";
 import Loader from "./Loader";
 
-function LoadingPage() {
+function LoadingPage({ className }) {
   return (
-    <div className=" flex justify-center items-center w-screen h-screen">
+    <div
+      className={`${className && className} flex justify-center  items-center `}
+    >
       <Loader className="  text-9xl text-green-400" />
     </div>
   );

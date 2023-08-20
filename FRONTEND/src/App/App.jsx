@@ -29,7 +29,7 @@ function App() {
       </div>
     </>
   ) : (
-    <LoadingPage />
+    <LoadingPage className="h-screen w-screen" />
   );
 }
 

@@ -19,5 +19,6 @@ export const ADDRESS = `${host}/address`;
 export const ADDRESS_CREATE = `${host}/address/create`;
 
 export const ORDER_CREATE = `${host}/order/create`;
+export const ORDER = `${host}/order`;
 export const ORDER_SUCCESS = `${host}/order/orderSuccess`;
 export const ORDER_FAILED = `${host}/order/orderFailed`;

@@ -5,7 +5,8 @@ import CartSummery from "../Components/CartPage/CartSummery";
 import useFetch from "../Hooks/useFetch";
 import { CART } from "../Api/endpoints";
 import { useSelector } from "react-redux";
-import EmptyCart from "../Components/CartPage/UI/EmptyCart";
+
+import NotFound from "../Components/UI/NotFound";
 
 function CartPage() {
   const fetchedCartItems = useFetch(CART, true);
@@ -19,7 +20,13 @@ function CartPage() {
           <CartSummery />
         </div>
       ) : (
-        <EmptyCart />
+        <NotFound
+          image="https://grossy-app.vercel.app/images/empty_cart.webp"
+          title="Your cart is empty"
+          description="Your favourite items are just a click away"
+          pathTitle="START SHOPING"
+          path="/"
+        />
       )}
     </PageWrapper>
   );
