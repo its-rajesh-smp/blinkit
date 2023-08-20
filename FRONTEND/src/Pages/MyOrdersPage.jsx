@@ -3,16 +3,15 @@ import PageWrapper from "../Components/Wrapper & Cards/PageWrapper";
 import OrderItem from "../Components/MyOrderPage/OrderItem";
 import useFetch from "../Hooks/useFetch";
 import { ORDER } from "../Api/endpoints";
-import LoadingPage from "../Components/UI/LoadingPage";
 import NotFound from "../Components/UI/NotFound";
 
 function MyOrdersPage() {
   const [loader, setLoader] = useState(true);
   const allOrders = useFetch(ORDER, true, setLoader);
 
-  return !loader ? (
-    <PageWrapper className="p-5 gap-5">
-      {allOrders.length > 0 ? (
+  return (
+    <PageWrapper loader={loader} className="p-5 gap-5">
+      {allOrders && allOrders.length > 0 ? (
         <>
           <h1 className=" text-2xl font-bold">Your Orders</h1>
           <div className=" flex flex-col gap-4">
@@ -34,8 +33,6 @@ function MyOrdersPage() {
         </>
       )}
     </PageWrapper>
-  ) : (
-    <LoadingPage className=" h-[calc(100vh-10rem)]" />
   );
 }
 

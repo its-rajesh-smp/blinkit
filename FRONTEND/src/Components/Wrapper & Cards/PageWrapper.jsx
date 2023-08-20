@@ -1,7 +1,8 @@
 import React from "react";
+import LoadingPage from "../UI/LoadingPage";
 
-function PageWrapper({ className, children }) {
-  return (
+function PageWrapper({ className, children, loader }) {
+  return !loader ? (
     <div
       className={`${
         className && className
@@ -9,6 +10,8 @@ function PageWrapper({ className, children }) {
     >
       {children}
     </div>
+  ) : (
+    <LoadingPage className=" h-[calc(100vh-10rem)]" />
   );
 }
 

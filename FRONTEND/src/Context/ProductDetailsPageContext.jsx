@@ -12,9 +12,9 @@ const ProductDetailsContext = React.createContext({
   subCategory: { id: 0, name: "" },
 });
 
-const ProductDetailsProvider = ({ children }) => {
+const ProductDetailsProvider = ({ children, setLoader }) => {
   const { productId } = useParams();
-  const product = useFetch(`${PRODUCT_DETAILS}/${productId}`);
+  const product = useFetch(`${PRODUCT_DETAILS}/${productId}`, false, setLoader);
 
   return (
     <ProductDetailsContext.Provider value={{ ...product }}>

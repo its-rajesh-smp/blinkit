@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PageWrapper from "../Components/Wrapper & Cards/PageWrapper";
 import CartContainer from "../Components/CartPage/CartContainer";
 import CartSummery from "../Components/CartPage/CartSummery";
@@ -9,11 +9,12 @@ import { useSelector } from "react-redux";
 import NotFound from "../Components/UI/NotFound";
 
 function CartPage() {
-  const fetchedCartItems = useFetch(CART, true);
+  const [loader, setLoader] = useState(true);
+  const fetchedCartItems = useFetch(CART, true, setLoader);
   const { total } = useSelector((state) => state.cartSlice);
 
   return (
-    <PageWrapper className="px-2">
+    <PageWrapper loader={loader} className="px-2">
       {total.quantity > 0 ? (
         <div className="flex flex-col md:flex-row">
           <CartContainer fetchedCartItems={fetchedCartItems} />
