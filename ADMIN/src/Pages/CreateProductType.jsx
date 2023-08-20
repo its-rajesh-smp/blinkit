@@ -18,6 +18,7 @@ function CreateProductType() {
   const [discount, setDiscount] = useState("");
   const [category, setCategory] = useState(1);
   const [subCategory, setSubCategory] = useState(1);
+  const [stock, setStock] = useState(10);
   const [productId, setProductId] = useState(1);
 
   const [state, setState] = useFetch(`${PRODUCT_TYPE}/${productId}`);
@@ -30,6 +31,7 @@ function CreateProductType() {
         price: +price,
         discount: +discount,
         productId: +productId,
+        stock: +stock,
       };
       const { data } = await axios.post(PRODUCT_TYPE_CREATE, payload);
       setState((p) => [data, ...p]);
@@ -60,6 +62,12 @@ function CreateProductType() {
           onChange={(e) => setDiscount(e.target.value)}
           type="text"
           placeholder="Discount"
+        />
+        <input
+          value={stock}
+          onChange={(e) => setStock(e.target.value)}
+          type="text"
+          placeholder="Stock"
         />
 
         <Select path={MAIN_CATEGORY} onChange={setCategory} value={category} />

@@ -10,12 +10,13 @@ exports.get = async (req, res) => {
 };
 exports.create = async (req, res) => {
   try {
-    const { productId, name, price, discount } = req.body;
+    const { productId, name, price, discount, stock } = req.body;
 
     const dbRes = await ProductType.create({
       productId,
       name,
       price,
+      stock,
       discount,
     });
 

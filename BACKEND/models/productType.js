@@ -20,6 +20,10 @@ const ProductType = sequelize.define("producttype", {
     defaultValue: 0,
     type: INTEGER,
   },
+  stock: {
+    type: INTEGER,
+    allowNull: false,
+  },
 });
 
 module.exports = ProductType;
