@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const MainCategory = require("../models/mainCategory");
 const Product = require("../models/product");
 const ProductType = require("../models/productType");
@@ -67,3 +68,28 @@ exports.getById = async (req, res) => {
     res.status(404).send(error.message);
   }
 };
+
+
+
+exports.search = async (req, res) => {
+  try {
+    const { searchParam } = req.params
+    const dbRes = await Product.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${searchParam}%`
+        }
+      },
+      include: [
+        ProductType,
+        { model: MainCategory, attributes: ["id", "name"] },
+        { model: SubCategory, attributes: ["id", "name"] },
+      ],
+    });
+
+    res.send(dbRes)
+
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
+}

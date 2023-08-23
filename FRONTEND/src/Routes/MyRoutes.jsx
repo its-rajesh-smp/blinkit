@@ -7,6 +7,7 @@ import CartPage from "../Pages/CartPage";
 import CheckoutPage from "../Pages/CheckoutPage";
 import AddressPage from "../Pages/AddressPage";
 import MyOrdersPage from "../Pages/MyOrdersPage";
+import SearchPage from "../Pages/SearchPage";
 
 function MyRoutes() {
   return (
@@ -21,6 +22,7 @@ function MyRoutes() {
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/address" element={<AddressPage />} />
       <Route path="/myOrder" element={<MyOrdersPage />} />
+      <Route path="/search" element={<SearchPage />} />
     </Routes>
   );
 }
