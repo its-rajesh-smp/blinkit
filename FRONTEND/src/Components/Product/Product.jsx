@@ -14,6 +14,13 @@ function Product({ className, data }) {
     navigate(`/pd/${data.id}`);
   };
 
+  // Calculating Initial Price
+  const withoutDiscount = Math.ceil(
+    currentType.price + (currentType.price * currentType.discount) / 100
+  );
+  // Difference
+  const priceDeference = withoutDiscount - currentType.price;
+
   return (
     <div
       onClick={onClickProductHandeler}
@@ -65,16 +72,12 @@ function Product({ className, data }) {
       {/* ADD BUTTON & PRICE */}
       <div className=" flex flex-col gap-2 md:flex-row  justify-between">
         <div className=" flex justify-between items-center md:block">
-          <p className=" text-sm font-semibold">
-            $
-            {Math.ceil(
-              currentType.price -
-                (currentType.price * currentType.discount) / 100
-            )}
-          </p>
-          <p className=" text-xs  text-gray-600 line-through">
-            ${currentType.price}
-          </p>
+          <p className=" text-sm font-semibold">${currentType.price}</p>
+          {priceDeference != 0 && (
+            <p className=" text-xs  text-gray-600 line-through">
+              ${withoutDiscount}
+            </p>
+          )}
         </div>
         <AddProductBTN id={currentType.id} />
       </div>

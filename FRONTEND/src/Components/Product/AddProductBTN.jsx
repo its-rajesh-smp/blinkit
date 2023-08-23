@@ -6,7 +6,7 @@ import {
 } from "../../Store/Actions/cartActions";
 import Loader from "../UI/Loader";
 
-function AddProductBTN({ id }) {
+function AddProductBTN({ id, className }) {
   const dispatch = useDispatch();
   const { cartObj } = useSelector((state) => state.cartSlice);
   const [loader, setLoader] = useState(false);
@@ -60,7 +60,9 @@ function AddProductBTN({ id }) {
     <div
       className={` ${
         quantity === 0 || loader ? "justify-center" : "justify-between"
-      } bg-green-100 border border-green-700 w-full md:w-20 flex   px-2 items-center  h-8 rounded-md font-semibold text-green-950  `}
+      } ${
+        className ? className : "w-full "
+      }  bg-green-100 border border-green-700  md:w-20 flex   px-2 items-center  h-8 rounded-md font-semibold text-green-950  `}
     >
       {quantity !== 0 && !loader && (
         <button onClick={onClickDecreament}>-</button>
