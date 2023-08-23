@@ -1,15 +1,24 @@
 import React from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setLoginComponent } from "../../../Store/Reducer/headerLoginSlice";
+import { toast } from "react-toastify";
 
 function CartBtn() {
   const { total } = useSelector((state) => state.cartSlice);
+  const { auth } = useSelector((state) => state.authSlice);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // CART BTN HANDELER
   const onClickCartBtn = () => {
-    navigate("/cart");
+    if (auth) {
+      navigate("/cart");
+    } else {
+      toast.info("To open cart u have to login");
+      dispatch(setLoginComponent());
+    }
   };
 
   return (

@@ -8,8 +8,10 @@ import CheckoutPage from "../Pages/CheckoutPage";
 import AddressPage from "../Pages/AddressPage";
 import MyOrdersPage from "../Pages/MyOrdersPage";
 import SearchPage from "../Pages/SearchPage";
+import { useSelector } from "react-redux";
 
 function MyRoutes() {
+  const { auth } = useSelector((state) => state.authSlice);
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
@@ -18,11 +20,16 @@ function MyRoutes() {
         element={<ProductsPage />}
       />
       <Route path="/pd/:productId" element={<ProductPage />} />
-      <Route path="/cart" element={<CartPage />} />
-      <Route path="/checkout" element={<CheckoutPage />} />
-      <Route path="/address" element={<AddressPage />} />
-      <Route path="/myOrder" element={<MyOrdersPage />} />
       <Route path="/search" element={<SearchPage />} />
+      {auth && (
+        <>
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/address" element={<AddressPage />} />
+          <Route path="/myOrder" element={<MyOrdersPage />} />
+        </>
+      )}
+      <Route path="*" element={<Homepage />} />
     </Routes>
   );
 }
