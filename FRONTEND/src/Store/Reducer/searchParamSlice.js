@@ -4,7 +4,6 @@ const searchParamSlice = createSlice({
     initialState: { param: "" },
     reducers: {
         setSearchParam: (state, action) => {
-            console.log(action.payload);
             state.param = action.payload
         },
         clearSearchParam: (state) => {

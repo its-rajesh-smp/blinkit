@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { PRODUCT_SEARCH } from "../../Api/endpoints";
 import { useSelector } from "react-redux";
 import Product from "../Product/Product";
 import axios from "axios";
 import NotFound from "../UI/NotFound";
+import SearchHistoryContext from "../../Context/SearchHistoryContext";
 
 function SearchedProductContainer() {
   const { param } = useSelector((state) => state.searchParamSlice);
+  const { setSearchHistoryHandeler } = useContext(SearchHistoryContext);
   const [productsList, setProductList] = useState([]);
 
   /* -------------------------------------------------------------------------- */
@@ -20,6 +22,10 @@ function SearchedProductContainer() {
     (async () => {
       try {
         const { data } = await axios.get(`${PRODUCT_SEARCH}/${param}`);
+
+        // If Any Data Comes In Response only in that time storing the param as history
+        data.length > 0 && setSearchHistoryHandeler(param);
+
         setProductList(data);
       } catch (error) {
         console.log(error);
