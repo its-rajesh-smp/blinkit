@@ -5,7 +5,7 @@ import useFetch from "../../Hooks/useFetch";
 import { PRODUCT } from "../../Api/endpoints";
 import { useNavigate } from "react-router-dom";
 
-function ProductCarousel({ mainCategoryId, title }) {
+function ProductCarousel({ mainCategoryId, title, firstSubCategoryId }) {
   const containerRef = useRef();
   const navigate = useNavigate();
   const productLists = useFetch(`${PRODUCT}/${mainCategoryId}`);
@@ -14,7 +14,7 @@ function ProductCarousel({ mainCategoryId, title }) {
   /*                              ON CLICK SEE ALL                              */
   /* -------------------------------------------------------------------------- */
   const onClickSeeAllHandeler = () => {
-    navigate(`/pl/${mainCategoryId}/1`);
+    navigate(`/pl/${mainCategoryId}/${firstSubCategoryId}`);
   };
 
   return (

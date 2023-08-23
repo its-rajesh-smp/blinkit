@@ -10,6 +10,7 @@ function MainCategoryContainer() {
       {mainCategoryList &&
         mainCategoryList.map((mainCategory) => (
           <MainCategory
+            firstSubCategoryId={mainCategory.subCategories[0].id}
             key={mainCategory.id}
             name={mainCategory.name}
             id={mainCategory.id}
