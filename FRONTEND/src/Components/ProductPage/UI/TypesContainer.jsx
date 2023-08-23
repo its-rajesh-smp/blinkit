@@ -17,6 +17,7 @@ function TypesContainer() {
               price={option.price}
               id={option.id}
               discount={option.discount}
+              stock={option.stock}
             />
           ))}
         </div>

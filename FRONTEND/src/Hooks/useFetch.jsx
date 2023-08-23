@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setLoginComponent } from "../Store/Reducer/headerLoginSlice";
+import { toast } from "react-toastify";
 
 function useFetch(path, authentication, setLoader) {
   const [state, setState] = useState(null);
@@ -16,6 +17,7 @@ function useFetch(path, authentication, setLoader) {
         const localIdToken = localStorage.getItem("blinkid_idToken");
         if (!localIdToken) {
           toast.error("To Perform This Operation U Have To Login");
+          setLoader(false);
           dispatch(setLoginComponent());
           return;
         }

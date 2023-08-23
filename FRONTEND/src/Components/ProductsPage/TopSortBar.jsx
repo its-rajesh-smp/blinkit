@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsFilterRight } from "react-icons/bs";
+import { useParams } from "react-router-dom";
+import ProductPageContext from "../../Context/ProductPageContext";
 
 function TopSortBar() {
+  const { subCategoryList } = useContext(ProductPageContext);
+  const { subCategoryId } = useParams();
+
+  const currentCategory =
+    subCategoryList &&
+    subCategoryList.find((subCategory) => {
+      return subCategory.id == subCategoryId;
+    });
+
   return (
     <div className=" md:h-14  flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center p-3 w-full  border border-l-0">
       <div className=" flex justify-between w-full">
-        <p className=" font-bold">Buy Fresh Vegetables Online</p>
+        <p className=" font-bold">Buy {currentCategory?.name} Online</p>
         <BsFilterRight className=" md:hidden text-4xl" />
       </div>
 

@@ -19,10 +19,6 @@ function ProductsPage() {
               <ProductsContainer />
             </div>
           </div>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta
-          doloremque laborum, nemo illum possimus, non libero ex ea maxime
-          debitis deserunt cum consequuntur sit expedita omnis aperiam aliquid
-          corporis sunt.
         </PageWrapper>
       </div>
     </ProductPageContextProvider>

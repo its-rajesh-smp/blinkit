@@ -6,7 +6,7 @@ function MainCategoryContainer() {
   const mainCategoryList = useSelector((state) => state.mainCategorySlice);
 
   return (
-    <div className="  hideScrollbar  mt-6 overflow-scroll flex gap-5 justify-between ">
+    <div className="  hideScrollbar  mt-6 overflow-scroll flex gap-20 justify-left ">
       {mainCategoryList &&
         mainCategoryList.map((mainCategory) => (
           <MainCategory

@@ -26,7 +26,7 @@ export default TopCategoryBar;
 function TopCategory({ name, isActive, id }) {
   return (
     <Link
-      to={`/pl/${id}/1`}
+      to={`/pl/${id}/${id * 2}`} //!Need To Fix this
       className={` px-4 flex items-center ${
         isActive ? " bg-green-600 text-white" : "bg-white hover:bg-green-100"
       } transition-all`}

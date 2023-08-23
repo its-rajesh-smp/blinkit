@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function MainCategory({ name, image, id }) {
   return (
-    <NavLink to={`/pl/${id}/1`}>
+    <NavLink to={`/pl/${id}/${id * 2}`}>
       <div className="hover:bg-green-50 transition-all bg-white  shrink-0 w-28 h-40 gap-3  flex flex-col justify-center items-center">
         <img
           className="  w-20  object-cover object-center"

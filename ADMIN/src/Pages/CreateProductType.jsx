@@ -77,7 +77,7 @@ function CreateProductType() {
           value={subCategory}
         />
         <Select
-          path={`${PRODUCT}/${subCategory}`}
+          path={`${PRODUCT}/${category}/${subCategory}`}
           onChange={setProductId}
           value={productId}
         />

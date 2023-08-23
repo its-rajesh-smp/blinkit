@@ -40,6 +40,7 @@ exports.create = async (req, res) => {
 exports.getByCategory = async (req, res) => {
   try {
     const { mainCategory } = req.params;
+
     const dbRes = await Product.findAll({
       where: { category: mainCategory },
       include: [ProductType],

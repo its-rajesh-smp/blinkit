@@ -22,11 +22,13 @@ function Product({ className, data }) {
       } shrink-0 relative bg-white  shadow  h-72 flex p-2 rounded-md  flex-col justify-between border`}
     >
       {/* OUT OF STOCK */}
-      {/* <div className=" flex z-10 justify-center items-center opacity-80 absolute top-0 left-0 bg-gray-100 w-full h-full rounded-md">
-        <p className=" relative bottom-10 text-xs font-bold text-white bg-slate-700 px-2 py-1  rounded-md">
-          Out of Stock
-        </p>
-      </div> */}
+      {currentType.stock == 0 && (
+        <div className=" flex z-10 justify-center items-center opacity-80 absolute top-0 left-0 bg-gray-100 w-full h-full rounded-md">
+          <p className=" relative bottom-10 text-xs font-bold text-white bg-slate-700 px-2 py-1  rounded-md">
+            Out of Stock
+          </p>
+        </div>
+      )}
 
       {/* IMAGE */}
       <div className=" flex justify-center">
@@ -41,7 +43,7 @@ function Product({ className, data }) {
       <p className="  text-sm font-semibold">{data.name}</p>
 
       {/* OFFER */}
-      <Offer discount={currentType.discount} />
+      {currentType.discount !== 0 && <Offer discount={currentType.discount} />}
 
       {/* TYPE */}
       <select

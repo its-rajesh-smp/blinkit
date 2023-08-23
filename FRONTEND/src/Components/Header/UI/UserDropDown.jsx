@@ -2,10 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
 import { BiSolidLogOut } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { logoutUserAct } from "../../../Store/Actions/authActions";
 
 function UserDropDown({ showOptions }) {
+  const dispatch = useDispatch();
+
   function onClickDropdown() {
     showOptions((p) => !p);
+  }
+
+  function onLogoutBtnClick() {
+    dispatch(logoutUserAct());
   }
 
   return (
@@ -27,7 +35,7 @@ function UserDropDown({ showOptions }) {
         className=" text-gray-600 hover:text-black  transition-all flex items-center gap-4 text-sm cursor-pointer"
       >
         <BiSolidLogOut className=" text-lg" />
-        <p>Logout</p>
+        <button onClick={onLogoutBtnClick}>Logout</button>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { USER_GET, USER_LOGIN, USER_SIGNUP } from "../../Api/endpoints";
 import { toast } from "react-toastify";
-import { authUser } from "../Reducer/authSlice";
+import { authUser, logoutUser } from "../Reducer/authSlice";
 import { setCart } from "../Reducer/cartSlice";
 import { setAllAddress } from "../Reducer/addressSlice";
 
@@ -71,6 +71,8 @@ export const getUserAct = (setLoader) => {
       }, {});
 
       delete data.cartItems;
+
+
       dispatch(
         setAllAddress(
           data.addresses.map((address) => {
@@ -81,7 +83,9 @@ export const getUserAct = (setLoader) => {
           })
         )
       );
+
       delete data.addresses;
+
       dispatch(setCart({ cartObj, total }));
       dispatch(authUser(data));
     } catch (error) {
@@ -93,5 +97,8 @@ export const getUserAct = (setLoader) => {
 };
 
 export const logoutUserAct = () => {
-  return (dispatch, getState) => {};
+  return (dispatch, getState) => {
+    localStorage.removeItem('blinkid_idToken')
+    dispatch(logoutUser())
+  };
 };

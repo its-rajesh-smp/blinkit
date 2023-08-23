@@ -44,7 +44,9 @@ function LoginForm() {
   /* -------------------------------------------------------------------------- */
   /*                               ON CLICK GUEST                               */
   /* -------------------------------------------------------------------------- */
-  const onClickGuestHandeler = () => {};
+  const onClickGuestHandeler = () => {
+    dispatch(loginUserAct("guest", "guest", setLoader, closeBtnHandeler));
+  };
 
   /* -------------------------------------------------------------------------- */
   /*                             ON CLICK CLOSE BTN                             */
