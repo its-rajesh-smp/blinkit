@@ -20,15 +20,15 @@ function TopSortBar() {
         <BsFilterRight className=" md:hidden text-4xl" />
       </div>
 
-      <div className=" w-full  md:justify-end self-start flex gap-2 items-center">
+      {/* <div className=" w-full  md:justify-end self-start flex gap-2 items-center">
         <p className="  text-gray-500 text-xs">Sort By</p>
         <select className=" cursor-pointer  text-green-500 border rounded-md h-8 px-4 outline-1 outline-blue-500  text-sm">
-          <option value="">Relevance</option>
-          <option value="">Low To High</option>
-          <option value="">High To Low</option>
-          <option value="">Discount</option>
+          <option value="all">All</option>
+          <option value="lowtohigh">Low To High</option>
+          <option value="hightolow">High To Low</option>
+          <option value="discount">Discount</option>
         </select>
-      </div>
+      </div> */}
     </div>
   );
 }

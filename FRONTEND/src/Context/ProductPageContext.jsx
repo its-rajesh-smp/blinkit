@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { PRODUCT, SUB_CATEGORY_GET } from "../Api/endpoints";
 import useFetch from "../Hooks/useFetch";
@@ -10,6 +10,8 @@ const ProductPageContext = React.createContext({
 
 const ProductPageContextProvider = ({ setLoader, children, setIsPresent }) => {
   const { mainCategoryId, subCategoryId } = useParams();
+
+  // FETCHING SUBCATEGORY
   const subCategoryList = useFetch(
     `${SUB_CATEGORY_GET}/${mainCategoryId}`,
     false,
@@ -22,6 +24,8 @@ const ProductPageContextProvider = ({ setLoader, children, setIsPresent }) => {
       }
     }
   );
+
+  // FETCHING PRODUCTS
   const productsList = useFetch(
     `${PRODUCT}/${mainCategoryId}/${subCategoryId}`
   );
