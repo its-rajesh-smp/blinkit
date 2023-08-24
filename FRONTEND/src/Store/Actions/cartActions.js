@@ -127,3 +127,46 @@ export const updateCartQuantityAct = (
     }
   };
 };
+
+
+
+export const deleteAllQuantity = (producttypeId, price, quantity) => {
+  return async (dispatch, getState) => {
+    try {
+      const localIdToken = localStorage.getItem("blinkid_idToken");
+      if (!localIdToken) {
+        toast.error("To add in cart u have to login..");
+        setLoader(false);
+        dispatch(setLoginComponent());
+        return;
+      }
+
+      await axios.delete(`${CART}/${producttypeId}`, { headers: { idToken: localIdToken } });
+
+
+
+      // FORMING NEW CARTOBJ CARTARRAY CARTTOTAL
+      const newTotal = { ...getState().cartSlice.total };
+
+      newTotal.quantity = newTotal.quantity - quantity
+      newTotal.price = newTotal.price - (quantity * price)
+
+      const newCartObj = { ...getState().cartSlice.cartObj };
+      delete newCartObj[producttypeId]
+
+      // DISPATCHING NEW UPDATED CART
+      dispatch(
+        setCart({
+          cartObj: newCartObj,
+          total: newTotal,
+        })
+      );
+
+
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  }
+
+}

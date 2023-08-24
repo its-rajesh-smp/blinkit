@@ -64,16 +64,7 @@ exports.delete = async (req, res) => {
     const { email } = req.user;
     const { producttypeId } = req.params;
 
-    // Finding Product Type
-    const productRes = await ProductType.findOne({
-      where: { id: producttypeId },
-    });
-
-    // If Product Not found
-    if (!productRes) {
-      res.status(404).send("Product Not Found");
-      return;
-    }
+    console.log(email, producttypeId);
 
     // Delete From Cart
     const dbRes = await CartItem.destroy({
@@ -86,11 +77,7 @@ exports.delete = async (req, res) => {
       return;
     }
 
-    res.send({
-      producttypeId: +producttypeId,
-      quantity: 0,
-      price: productRes.price,
-    });
+    res.send(true);
   } catch (error) {
     res.status(404).send(error.message);
   }

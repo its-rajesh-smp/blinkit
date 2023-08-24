@@ -1,10 +1,12 @@
 import React from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import AddProductBTN from "../../Product/AddProductBTN";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAllQuantity } from "../../../Store/Actions/cartActions";
 
 function CartItem({ data }) {
   const { cartObj } = useSelector((state) => state.cartSlice);
+  const dispatch = useDispatch();
 
   // If The Item is not present in the cartObject that means not present so we will not show that item
   if (!cartObj[data.producttypeId]) {
@@ -13,6 +15,10 @@ function CartItem({ data }) {
 
   const price = cartObj[data.producttypeId].price;
   const quantity = cartObj[data.producttypeId].quantity;
+
+  const onClickDeleteBtnHandeler = () => {
+    dispatch(deleteAllQuantity(data.producttypeId, price, quantity));
+  };
 
   return (
     <div className=" flex justify-between pr-5 items-center">
@@ -35,7 +41,10 @@ function CartItem({ data }) {
         </div>
       </div>
       <div className=" w-[20%] md:w-fit  h-full  items-end gap-10  flex flex-col justify-center   ">
-        <AiOutlineDelete className=" cursor-pointer text-red-600" />
+        <AiOutlineDelete
+          onClick={onClickDeleteBtnHandeler}
+          className=" cursor-pointer text-red-600"
+        />
         <AddProductBTN id={data.producttypeId} />
       </div>
     </div>
