@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setLoginComponent } from "../Store/Reducer/headerLoginSlice";
 import { toast } from "react-toastify";
 
-function useFetch(path, authentication, setLoader) {
+function useFetch(path, authentication, setLoader, cb) {
   const [state, setState] = useState(null);
   const dispatch = useDispatch();
 
@@ -25,6 +25,11 @@ function useFetch(path, authentication, setLoader) {
       }
 
       const { data } = await axios.get(path, { headers: { ...headers } });
+
+      if (cb) {
+        cb(data);
+      }
+
       setState(data);
       if (setLoader) {
         setLoader(false);

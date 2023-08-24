@@ -8,9 +8,20 @@ const ProductPageContext = React.createContext({
   productsList: [],
 });
 
-const ProductPageContextProvider = ({ children }) => {
+const ProductPageContextProvider = ({ setLoader, children, setIsPresent }) => {
   const { mainCategoryId, subCategoryId } = useParams();
-  const subCategoryList = useFetch(`${SUB_CATEGORY_GET}/${mainCategoryId}`);
+  const subCategoryList = useFetch(
+    `${SUB_CATEGORY_GET}/${mainCategoryId}`,
+    false,
+    setLoader,
+    (data) => {
+      if (data.length === 0) {
+        setIsPresent(false);
+      } else {
+        setIsPresent(true);
+      }
+    }
+  );
   const productsList = useFetch(
     `${PRODUCT}/${mainCategoryId}/${subCategoryId}`
   );

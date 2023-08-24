@@ -31,7 +31,16 @@ exports.logIn = async (req, res) => {
     const { email, password } = req.body;
 
     // Geting The User
-    const dbRes = await User.findOne({ where: { email: email } });
+    const dbRes = await User.findOne({
+      where: { email: email },
+      include: [
+        {
+          model: CartItem,
+          include: [{ model: ProductType, attributes: ["price"] }],
+        },
+        Address,
+      ],
+    });
 
     // If User Not Found
     if (dbRes === null) {
@@ -51,10 +60,9 @@ exports.logIn = async (req, res) => {
     // Generating idToken
     const idToken = createJwt({ email, password });
 
-    // Froming Payload
-    const payload = { email, idToken };
+    delete dbRes.dataValues.password;
 
-    res.status(201).send(payload);
+    res.status(201).send({ ...dbRes.dataValues, idToken });
   } catch (error) {
     res.status(404).send(error.message);
   }
@@ -100,4 +108,4 @@ exports.get = async (req, res) => {
     res.status(404).send(error.message);
   }
 };
-exports.update = async (req, res) => {};
+exports.update = async (req, res) => { };

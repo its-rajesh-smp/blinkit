@@ -31,8 +31,40 @@ export const loginUserAct = (email, password, setLoader, closeBtnHandeler) => {
       // Storing IdToken In Local Storage
       localStorage.setItem("blinkid_idToken", data.idToken);
 
+      // Forming Cart
+      const total = { quantity: 0, price: 0 };
+      const cartObj = data.cartItems.reduce((prev, item) => {
+        const obj = {
+          producttypeId: item.producttypeId,
+          quantity: item.quantity,
+          price: item.producttype.price,
+        };
+
+        total.quantity = total.quantity + obj.quantity;
+        total.price = total.price + obj.price * obj.quantity;
+
+        return { ...prev, [obj.producttypeId]: obj };
+      }, {});
+
+      delete data.cartItems;
+
+
+      dispatch(
+        setAllAddress(
+          data.addresses.map((address) => {
+            return {
+              ...address,
+              addressPosition: JSON.parse(address.addressPosition),
+            };
+          })
+        )
+      );
+
+      delete data.addresses;
+
+      dispatch(setCart({ cartObj, total }));
       dispatch(authUser(data));
-      closeBtnHandeler();
+      closeBtnHandeler()
     } catch (error) {
       console.log(error);
       toast.error(error.response.data);
