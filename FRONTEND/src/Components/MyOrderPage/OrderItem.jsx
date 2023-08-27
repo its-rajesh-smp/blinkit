@@ -21,7 +21,7 @@ function OrderItem({ data }) {
         address={address}
         phoneNumber={phoneNumber}
       />
-      <OrderItemOrderStatus paymentOrderId={paymentOrderId} />
+      <OrderItemOrderStatus data={data} />
     </div>
   );
 }
