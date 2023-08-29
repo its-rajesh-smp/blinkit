@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { clearSearchParam } from "../Store/Reducer/searchParamSlice";
 
 const SearchHistoryContext = React.createContext({
   searchHistory: [],
@@ -7,6 +9,7 @@ const SearchHistoryContext = React.createContext({
 });
 
 const SearchHistoryProvider = ({ children }) => {
+  const dispatch = useDispatch();
   const [searchHistory, setSearchHistory] = useState(
     localStorage.getItem("blinkit_search")
       ? JSON.parse(localStorage.getItem("blinkit_search"))
@@ -35,6 +38,7 @@ const SearchHistoryProvider = ({ children }) => {
   const clearSearchHistory = () => {
     localStorage.removeItem("blinkit_search");
     setSearchHistory([]);
+    dispatch(clearSearchParam());
   };
 
   return (
