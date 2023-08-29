@@ -37,6 +37,7 @@ function AddProductBTN({ id, className }) {
         updateCartQuantityAct(
           id,
           Number(quantity + 1),
+          cartObj[id].price,
           setQuantity,
           setLoader,
           "INCREAMENT"
@@ -51,7 +52,13 @@ function AddProductBTN({ id, className }) {
     if (!loader) {
       setLoader(true);
       dispatch(
-        updateCartQuantityAct(id, Number(quantity - 1), setQuantity, setLoader)
+        updateCartQuantityAct(
+          id,
+          Number(quantity - 1),
+          cartObj[id].price,
+          setQuantity,
+          setLoader
+        )
       );
     }
   };

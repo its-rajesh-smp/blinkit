@@ -64,7 +64,6 @@ exports.delete = async (req, res) => {
     const { email } = req.user;
     const { producttypeId } = req.params;
 
-    console.log(email, producttypeId);
 
     // Delete From Cart
     const dbRes = await CartItem.destroy({

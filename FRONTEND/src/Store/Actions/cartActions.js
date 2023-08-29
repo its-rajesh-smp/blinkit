@@ -47,6 +47,7 @@ export const addToCartAct = (
 export const updateCartQuantityAct = (
   producttypeId,
   quantity,
+  price,
   setQuantity,
   setLoader,
   operation
@@ -71,12 +72,10 @@ export const updateCartQuantityAct = (
           },
         });
 
-        console.log(data);
-
         // Forming Cart
         const newTotal = { ...getState().cartSlice.total };
         newTotal.quantity = newTotal.quantity - 1;
-        newTotal.price = newTotal.price - data.price;
+        newTotal.price = newTotal.price - price;
         const newCartObj = { ...getState().cartSlice.cartObj };
         delete newCartObj[producttypeId];
 
