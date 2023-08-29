@@ -80,7 +80,7 @@ function ScrollArrow({ icon, side, containerRef }) {
   return (
     <p
       onClick={onClickArrow}
-      className={` hidden md:block absolute top-[60%] -translate-y-[50%] ${
+      className={` hidden z-20 md:block absolute top-[60%] -translate-y-[50%] ${
         side === "left" ? "-left-5" : "-right-5"
       }  bg-white  shadow-xl cursor-pointer hover:bg-gray-100  transition-all  rounded-full  p-3 z-10`}
     >
