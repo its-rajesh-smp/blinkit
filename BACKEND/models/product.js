@@ -1,4 +1,4 @@
-const { INTEGER, STRING, JSON } = require("sequelize");
+const { INTEGER, STRING, TEXT } = require("sequelize");
 const sequelize = require("../utils/database");
 
 const Product = sequelize.define("product", {
@@ -14,11 +14,11 @@ const Product = sequelize.define("product", {
   },
   description: {
     allowNull: false,
-    type: STRING,
+    type: TEXT,
   },
   images: {
     allowNull: false,
-    type: JSON,
+    type: TEXT,
   },
 });
 

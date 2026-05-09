@@ -69,7 +69,7 @@ function CreateProduct() {
         />
 
         <button onClick={onClickAddHandeler} className=" bg-blue-400">
-          Add Category
+          Add Product
         </button>
       </Form>
 

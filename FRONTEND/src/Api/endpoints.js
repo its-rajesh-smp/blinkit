@@ -1,4 +1,6 @@
-const host = "http://localhost:5000";
+import { API_BASE_URL } from "../config";
+
+const host = API_BASE_URL;
 export const USER_SIGNUP = `${host}/user/signUp`;
 export const USER_LOGIN = `${host}/user/logIn`;
 export const USER_GET = `${host}/user`;

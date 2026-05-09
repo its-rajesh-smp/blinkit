@@ -24,10 +24,17 @@ exports.get = async (req, res) => {
 exports.create = async (req, res) => {
   try {
     const { name, description, images, category, subcategory } = req.body;
+    const imageList = Array.isArray(images)
+      ? images
+      : String(images)
+          .split(",")
+          .map((image) => image.trim())
+          .filter(Boolean);
+
     const dbRes = await Product.create({
       name,
       description,
-      images,
+      images: JSON.stringify(imageList),
       category,
       subcategory,
     });
@@ -77,7 +84,7 @@ exports.search = async (req, res) => {
     const dbRes = await Product.findAll({
       where: {
         name: {
-          [Op.like]: `%${searchParam}%`
+          [Op.iLike]: `%${searchParam}%`
         }
       },
       include: [

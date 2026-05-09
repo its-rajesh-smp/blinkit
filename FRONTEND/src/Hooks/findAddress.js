@@ -1,8 +1,15 @@
 import axios from "axios";
-import { GOOGLE_MAP_API_KEY } from "../../cred";
+import { GOOGLE_MAP_API_KEY } from "../config";
 
 export default async function findAddress(position) {
   try {
+    if (!GOOGLE_MAP_API_KEY) {
+      return {
+        address: "",
+        addressPosition: position,
+      };
+    }
+
     const { data } = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.lat},${position.lng}&key=${GOOGLE_MAP_API_KEY}`
     );

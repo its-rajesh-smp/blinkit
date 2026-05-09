@@ -12,6 +12,7 @@ import {
   createAddressAct,
   editAddressAct,
 } from "../../../Store/Actions/addressActions";
+import { GOOGLE_MAP_API_KEY } from "../../../config";
 
 function AddressForm() {
   const [autoComplete, setAutoComplete] = useState(null);
@@ -99,17 +100,27 @@ function AddressForm() {
             placeHolder="Phone Number"
             className=" h-10"
           />
-          <Autocomplete
-            onLoad={(autoCom) => {
-              setAutoComplete(autoCom);
-            }}
-            onPlaceChanged={() => {
-              if (autoComplete) {
-                const place = autoComplete.getPlace();
-                handlePlaceSelect(place);
-              }
-            }}
-          >
+          {GOOGLE_MAP_API_KEY ? (
+            <Autocomplete
+              onLoad={(autoCom) => {
+                setAutoComplete(autoCom);
+              }}
+              onPlaceChanged={() => {
+                if (autoComplete) {
+                  const place = autoComplete.getPlace();
+                  handlePlaceSelect(place);
+                }
+              }}
+            >
+              <input
+                placeholder="Full Address"
+                className="h-full px-2 w-full"
+                onChange={onChangeAddress}
+                value={address}
+                autoComplete="off"
+              />
+            </Autocomplete>
+          ) : (
             <input
               placeholder="Full Address"
               className="h-full px-2 w-full"
@@ -117,7 +128,7 @@ function AddressForm() {
               value={address}
               autoComplete="off"
             />
-          </Autocomplete>
+          )}
         </div>
         <div>
           <p className=" py-2 text-center text-xs">

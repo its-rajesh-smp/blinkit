@@ -1,4 +1,4 @@
-import { RZP_KEY_ID } from "../../../cred";
+import { RZP_KEY_ID } from "../../config";
 import { ORDER_CREATE, ORDER_FAILED, ORDER_SUCCESS } from "../../Api/endpoints";
 import axios from "axios";
 import { clearCart } from "../Reducer/cartSlice";
@@ -37,6 +37,11 @@ export const placeOrderAct = () => {
       }
 
       // RAZORYPAY OPTIONS
+      if (!RZP_KEY_ID || !window.Razorpay) {
+        toast.error("Payment is not configured");
+        return;
+      }
+
       const options = {
         key: RZP_KEY_ID,
         order_id: data.id,
@@ -56,7 +61,7 @@ export const placeOrderAct = () => {
       };
 
       // RAZORPAY INSTANCE
-      var rzp1 = new Razorpay(options);
+      var rzp1 = new window.Razorpay(options);
 
       // IF PAYMENT FAILED
       rzp1.on("payment.failed", (response) =>

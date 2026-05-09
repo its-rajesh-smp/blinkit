@@ -1,4 +1,4 @@
-const host = "http://localhost:5000";
+const host = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 export const MAIN_CATEGORY = `${host}/mainCategory`;
 export const MAIN_CATEGORY_CREATE = `${host}/mainCategory/create`;
 
