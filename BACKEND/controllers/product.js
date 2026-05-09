@@ -7,7 +7,7 @@ exports.get = async (req, res) => {
   try {
     const { subCategory, mainCategory } = req.params;
     const dbRes = await Product.findAll({
-      where: { subCategory, category: mainCategory },
+      where: { subcategory: subCategory, category: mainCategory },
       include: [
         ProductType,
         { model: MainCategory, attributes: ["id", "name"] },
